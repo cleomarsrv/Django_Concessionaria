@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'body' %}
+    <form action="{% url 'upd_carro' carro.id %}" method="POST">
+        {% csrf_token %}
+        <br><br>
+        <div class="row">
+            <div class="col-md">
+                <label>Nome Carro: </label>
+                <input class="form-control" type="text" name="nomeCarro" value="{{carro.nomeCarro}}">
+            </div>
+
+            <div class="col-md">
+                <label>Marca do Carro: </label>        
+                <select name="marcaCarro" class="form-control">
+                    {% for marca in marcas %}
+                        <option value="{{marca.id}}">{{marca.nomeMarca}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md">
+            <label>placa Carro</label>
+            <input class="form-control" type="text" name="placaCarro" value="{{carro.placaCarro}}">
+        </div>
+
+        <div class="col-md">
+            <label>Tipo Combustivel</label>
+            <input class="form-control" type="text" name="combustivelCarro" value="{{carro.combustivelCarro}}">
+        </div>
+        
+        <div class="col-md">
+            <label>Detalhes ou especificações do Carro: </label>
+            <input class="form-control" type="text" name="especificacaoCarro" value="{{carro.especificacaoCarro}}">
+        </div>
+        
+        <div class="col-md">
+            <label>chassi</label>
+            <input class="form-control" type="text" name="chassiCarro" value="{{carro.chassiCarro}}">
+        </div>
+
+        <div class="row">
+            <div class="col-md">
+                <label> Ano Fabricação: </label>
+                <input class="form-control" type="number" name="anoFabricacaoCarro" value="{{carro.anoFabricacaoCarro}}">
+            </div>
+            
+            <div class="col-md">
+                <label> Ano Modelo: </label>
+                <input class="form-control" type="number" name="anoModeloCarro" value="{{carro.anoModeloCarro}}">
+            </div>
+
+            <div class="col-md">
+                <input class="btn btn-success" type="submit" value="Atualizar" >
+            </div>                
+        </div>
+    </form>                
+{% endblock 'body' %}
+

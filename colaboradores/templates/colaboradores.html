@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+
+{% block 'body' %}
+
+    <div class="container">
+
+        <form action="{% url 'colaboradores' %}" method="POST">
+            {% csrf_token %}
+            <br><br>
+            <div class="row">
+                <div class="col-md">
+                    <label>Nome Completo: </label>
+                    <input class="form-control" type="text" name="nomeCompleto">
+                </div>
+
+                <div class="col-md">
+                    <label>Email: </label>
+                    <input class="form-control" type="email" name="email">
+                </div>
+                    
+                <div class="col-md">
+                    <label> Data Nascimento: </label>
+                    <input class="form-control" type="date" name="dataNascimento">
+                </div>
+
+                <div class="col-md">
+                    <label>CPF</label>
+                    <input class="form-control" type="text" name="cpf">
+                </div>
+                
+                <div class="col-md">
+                    <label>Telefone</label>
+                    <input class="form-control" type="text" name="telefone">
+                </div>
+
+            </div>
+            
+            <div class="row">
+                <div class="col-md">
+                    <label>Endereco</label>
+                    <input class="form-control" type="text" name="endereco">
+                </div>
+
+                <div class="col-md">
+                    <label>Estado Civil</label>
+                    <input class="form-control" type="text" name="estadoCivil">
+                </div>
+
+                <div class="col-md">
+                    <label>ctps</label>
+                    <input class="form-control" type="text" name="ctps">
+                </div>
+
+                <div class="col-md">
+                    <label>pis</label>
+                    <input class="form-control" type="text" name="pis">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <label>Nome do pai: </label>
+                    <input class="form-control" type="text" name="nomePai">
+                </div>
+                
+                <div class="col-md">
+                    <label>Nome da mâe: </label>
+                    <input class="form-control" type="text" name="nomeMae">
+                </div>
+                
+                <div class="col-md">
+                    <label>tipoVinculo</label>
+                    <input class="form-control" type="text" name="tipoVinculo">
+                </div>
+                
+                <div class="col-md">
+                    <label>cargoAtual</label>
+                    <input class="form-control" type="text" name="cargoAtual">
+                </div>
+                
+                <div class="col-md">
+                    <label>funcaoAtual</label>
+                    <input class="form-control" type="text" name="funcaoAtual">
+                
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <label>salarioAtual</label>
+                    <input class="form-control" type="text" name="salarioAtual">
+                </div>
+                
+                <div class="col-md">
+                    <label>dataAdmissao</label>
+                    <input class="form-control" type="date" name="dataAdmissao">
+                </div>
+                
+                <div class="col-md">
+                    <label>dataDesligamento</label>
+                    <input class="form-control" type="date" name="dataDesligamento">
+                </div>
+
+                <div class="col-md">
+                    <label>situacao atual do Vinculo</label>
+                    <input class="form-control" type="text" name="situacaoVinculo">
+                </div>                
+
+                <div class="col-md">
+                    <input class="btn btn-success" type="submit" value="Salvar colaborador" >
+                </div>
+                
+            </div>
+        </form>
+
+        <hr style="background-color: gray;">
+
+        <div class="container">
+            <table class="table table-dark">
+                <label> <H5>colaboradores CADASTRADOS</H5> </label>
+                <thead>
+                    <tr>
+                        <th scope="col">Nome Completo</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Data Nascimento</th>
+                        <th scope="col">CPF</th>
+                        <th scope="col">Telefone</th>
+                        <th scope="col">Endereco</th>
+                        <th scope="col">Estado Civil</th>                        
+                        <th scope="col">ctps</th>
+                        <th scope="col">pis</th>
+                        <th scope="col">nomePai</th>
+                        <th scope="col">nomeMae</th>
+                        <th scope="col">tipoVinculo</th>
+                        <th scope="col">cargoAtual</th>
+                        <th scope="col">funcaoAtual</th>                        
+                        <th scope="col">salarioAtual</th>                        
+                        <th scope="col">dataAdmissao</th>                        
+                        <th scope="col">dataDesligamento</th>                        
+                        <th scope="col">situacaoVinculo</th>                                                    
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for colaborador in colaboradores %}
+                        <tr>
+                            <th><a href=" {% url 'editar_colaborador' colaborador.id %}">{{ colaborador.cpf }}</a></th>
+                            <td>{{colaborador.nomeCompleto}}</td>
+                            <td>{{colaborador.email}}</td>
+                            <td>{{colaborador.dataNascimento}}</td>
+                            <td>{{colaborador.cpf}}</td>
+                            <td>{{colaborador.telefone}}</td>
+                            <td>{{colaborador.endereco}}</td>
+                            <td>{{colaborador.estadoCivil}}</td>
+                            <td>{{colaborador.ctps}}</td>
+                            <td>{{colaborador.pis}}</td>
+                            <td>{{colaborador.nomePai}}</td>
+                            <td>{{colaborador.nomeMae}}</td>
+                            <td>{{colaborador.tipoVinculo}}</td>
+                            <td>{{colaborador.cargoAtual}}</td>
+                            <td>{{colaborador.funcaoAtual}}</td>
+                            <td>{{colaborador.salarioAtual}}</td>
+                            <td>{{colaborador.dataAdmissao}}</td>
+                            <td>{{colaborador.dataDesligamento}}</td>
+                            <td>{{colaborador.situacaoVinculo}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                
+            </table>
+            
+        </div>
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'body' %}
+    <form action="{% url 'upd_colaborador' colaborador.id %}" method="POST">
+        {% csrf_token %}
+        <br><br>
+        <div class="row">
+            <div class="col-md">
+                <label>Nome Completo: </label>
+                <input class="form-control" type="text" name="nomeCompleto" value="{{colaborador.nomeCompleto}}">
+            </div>
+
+            <div class="col-md">
+                <label>Email: </label>
+                <input class="form-control" type="email" name="email" value="{{colaborador.email}}">
+            </div>
+                
+            <div class="col-md">
+                <label> Data Nascimento: </label>
+                <input class="form-control" type="date" name="dataNascimento" value="{{colaborador.dataNascimento}}">
+            </div>
+
+            <div class="col-md">
+                <label>CPF</label>
+                <input class="form-control" type="text" name="cpf" value="{{colaborador.cpf}}">
+            </div>
+            
+            <div class="col-md">
+                <label>Telefone</label>
+                <input class="form-control" type="text" name="telefone" value="{{colaborador.telefone}}">
+            </div>
+
+        </div>
+        
+        <div class="row">
+            <div class="col-md">
+                <label>Endereco</label>
+                <input class="form-control" type="text" name="endereco" value="{{colaborador.endereco}}">
+            </div>
+
+            <div class="col-md">
+                <label>Estado Civil</label>
+                <input class="form-control" type="text" name="estadoCivil" value="{{colaborador.estadoCivil}}">
+            </div>
+
+            <div class="col-md">
+                <label>ctps</label>
+                <input class="form-control" type="text" name="ctps" value="{{colaborador.ctps}}">
+            </div>
+
+            <div class="col-md">
+                <label>pis</label>
+                <input class="form-control" type="text" name="pis" value="{{colaborador.pis}}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md">
+                <label>Nome do pai: </label>
+                <input class="form-control" type="text" name="nomePai" value="{{colaborador.nomePai}}">
+            </div>
+            
+            <div class="col-md">
+                <label>Nome da mâe: </label>
+                <input class="form-control" type="text" name="nomeMae" value="{{colaborador.nomeMae}}">
+            </div>
+            
+            <div class="col-md">
+                <label>tipoVinculo</label>
+                <input class="form-control" type="text" name="tipoVinculo" value="{{colaborador.tipoVinculo}}">
+            </div>
+            
+            <div class="col-md">
+                <label>cargoAtual</label>
+                <input class="form-control" type="text" name="cargoAtual" value="{{colaborador.cargoAtual}}">
+            </div>
+            
+            <div class="col-md">
+                <label>funcaoAtual</label>
+                <input class="form-control" type="text" name="funcaoAtual" value="{{colaborador.funcaoAtual}}">
+            
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md">
+                <label>Salário Atual: </label>
+                <input class="form-control" type="text" name="salarioAtual" value="{{colaborador.salarioAtual}}">
+            </div>
+            
+            <div class="col-md">
+                <label>Data Admissão: </label>
+                <input class="form-control" type="date" name="dataAdmissao" value="{{colaborador.dataAdmissao}}">
+            </div>
+            
+            <div class="col-md">
+                <label>data Desligamento: </label>
+                <input class="form-control" type="date" name="dataDesligamento" value="{{colaborador.dataDesligamento}}">
+            </div>
+
+            <div class="col-md">
+                <label>situacao atual do Vinculo: </label>
+                <input class="form-control" type="text" name="situacaoVinculo" value="{{colaborador.situacaoVinculo}}">
+            </div>                
+
+            <div class="col-md">
+                <input class="btn btn-success" type="submit" value="Atualizar Colaborador" >
+            </div>
+            
+        </div>
+
+    </form>
+{% endblock 'body' %}
+

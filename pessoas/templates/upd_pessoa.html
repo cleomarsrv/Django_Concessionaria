@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'body' %}
+    <form action="{% url 'upd_pessoa' pessoa.id %}" method="POST">
+        {% csrf_token %}
+        <br><br>
+        <div class="row">
+            <div class="col-md">
+                <label>Nome Completo: </label>
+                <input class="form-control" type="text" name="nomeCompleto" value="{{pessoa.nomeCompleto}}">
+            </div>
+
+            <div class="col-md">
+                <label>Email: </label>
+                <input class="form-control" type="email" name="email" value="{{pessoa.email}}">
+            </div>
+                
+            <div class="col-md">
+                <label>CPF</label>
+                <input class="form-control" type="text" name="cpf" value="{{pessoa.cpf}}">
+            </div>
+            
+            <div class="col-md">
+                <label>Atribuicao da pessoa: </label>        
+                <select name="atrib" class="form-control">
+                    <option value="{{pessoa.atrib.id}}">{{pessoa.atrib.tipo}}</option>
+                    {% for atrib in atribs %}
+                        {% if not atrib.id == pessoa.atrib.id%}
+                        <option value="{{atrib.id}}">{{atrib.tipo}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md">
+                <input class="btn btn-success" type="submit" value="Atualizar" >
+            </div>
+            
+        </div>
+    </form>
+{% endblock 'body' %}
+

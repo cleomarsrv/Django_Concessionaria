@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'body' %}
+    <form action="{% url 'upd_cliente' cliente.id %}" method="POST">
+        {% csrf_token %}
+        <br><br>
+        <div class="row">
+            <div class="col-md">
+                <label>Nome Completo: </label>
+                <input class="form-control" type="text" name="nomeCompleto" value="{{cliente.nomeCompleto}}">
+            </div>
+
+            <div class="col-md">
+                <label>Email: </label>
+                <input class="form-control" type="email" name="email" value="{{cliente.email}}">
+            </div>
+                
+            <div class="col-md">
+                <label>Data Nascimento</label>
+                <input class="form-control" type="date" name="dataNascimento" value="{{cliente.dataNascimento}}">
+            </div>
+
+            <div class="col-md">
+                <label>CPF: </label>
+                <input class="form-control" type="text" name="cpf" value="{{cliente.cpf}}">
+            </div>
+
+            <div class="col-md">
+                <label>Telefone</label>
+                <input class="form-control" type="text" name="telefone" value="{{cliente.telefone}}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md">
+                <label>Endereco</label>
+                <input class="form-control" type="text" name="endereco" value="{{cliente.endereco}}">
+            </div>            
+            
+            <div class="col-md">
+                <label>Estado Civil</label>
+                <input class="form-control" type="text" name="estadoCivil" value="{{cliente.estadoCivil}}">
+            </div>  
+
+            <div class="col-md">
+                <label>Renda </label>
+                <input class="form-control" type="text" name="renda" value="{{cliente.renda}}">
+            </div>  
+            
+            <div class="col-md">
+                <label>Profissao: </label>
+                <input class="form-control" type="text" name="profissao" value="{{cliente.profissao}}">
+            </div>              
+            
+            <div class="col-md">
+                <input class="btn btn-success" type="submit" value="Atualizar Cliente" >
+            </div>
+            
+        </div>
+    </form>
+{% endblock 'body' %}
+

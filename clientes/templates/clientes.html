@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block 'body' %}
+
+    <div class="container">
+
+        <form action="{% url 'clientes' %}" method="POST">
+            {% csrf_token %}
+            <br><br>
+            <div class="row">
+                <div class="col-md">
+                    <label>Nome Completo: </label>
+                    <input class="form-control" type="text" name="nomeCompleto">
+                </div>
+
+                <div class="col-md">
+                    <label>Email: </label>
+                    <input class="form-control" type="email" name="email">
+                </div>
+                    
+                <div class="col-md">
+                    <label> Data Nascimento: </label>
+                    <input class="form-control" type="date" name="dataNascimento">
+                </div>
+
+                <div class="col-md">
+                    <label>CPF</label>
+                    <input class="form-control" type="text" name="cpf">
+                </div>
+                
+                <div class="col-md">
+                    <label>Telefone</label>
+                    <input class="form-control" type="text" name="telefone">
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <label>Endereco</label>
+                    <input class="form-control" type="text" name="endereco">
+                </div>
+
+                <div class="col-md">
+                    <label>Estado Civil</label>
+                    <input class="form-control" type="text" name="estadoCivil">
+                </div>
+
+                <div class="col-md">
+                    <label>Renda</label>
+                    <input class="form-control" type="text" name="renda">
+                </div>
+                
+                <div class="col-md">
+                    <label>Profissao</label>
+                    <input class="form-control" type="text" name="profissao">
+                </div>                
+
+                <div class="col-md">
+                    <input class="btn btn-success" type="submit" value="Salvar Cliente" >
+                </div>
+                
+            </div>
+        </form>
+
+        <hr style="background-color: gray;">
+
+        <div class="container">
+            <table class="table table-dark">
+                <label> <H5>CLIENTES CADASTRADOS</H5> </label>
+                <thead>
+                    <tr>
+                        <th scope="col">Nome Completo</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Data Nascimento</th>
+                        <th scope="col">CPF</th>
+                        <th scope="col">Telefone</th>
+                        <th scope="col">Endereco</th>
+                        <th scope="col">Estado Civil</th>                        
+                        <th scope="col">Renda</th>                        
+                        <th scope="col">Profissao</th>                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cliente in clientes %}
+                        <tr>
+                            <th><a href=" {% url 'editar_cliente' cliente.id %}">{{ cliente.cpf }}</a></th>
+                            <td>{{cliente.nomeCompleto}}</td>
+                            <td>{{cliente.email}}</td>
+                            <td>{{cliente.dataNascimento}}</td>
+                            <td>{{cliente.cpf}}</td>
+                            <td>{{cliente.telefone}}</td>
+                            <td>{{cliente.endereco}}</td>
+                            <td>{{cliente.estadoCivil}}</td>
+                            <td>{{cliente.renda}}</td>
+                            <td>{{cliente.profissao}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                
+            </table>
+            
+        </div>
+
+    </div>
+
+{% endblock %}
