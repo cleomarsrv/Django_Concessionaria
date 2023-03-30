@@ -2,19 +2,19 @@ from django.shortcuts import render, redirect
 from .models import Carro
 from django.urls import reverse
 from django.http import HttpResponse
-from fornecedores.models import Marca
+from fornecedores.models import Fornecedor
 
 def carros(request):
     if request.method == "GET":
         carros = Carro.objects.all()
-        marcas = Marca.objects.all()
-        return render(request, 'carros.html', {'carros':carros, 'marcas':marcas})
+        fornecedores = Fornecedor.objects.all()
+        return render(request, 'carros.html', {'carros':carros, 'fornecedores':fornecedores})
     elif request.method == "POST":
         placaCarro = request.POST.get('placaCarro')
         nomeCarro = request.POST.get('nomeCarro')
         combustivelCarro = request.POST.get('combustivelCarro')
         especificacaoCarro = request.POST.get('especificacaoCarro')
-        marcaCarro = request.POST.get('marcaCarro')
+        fornecedor = request.POST.get('fornecedor')
         anoFabricacaoCarro = request.POST.get('anoFabricacaoCarro')
         anoModeloCarro = request.POST.get('anoModeloCarro')
         chassiCarro = request.POST.get('chassiCarro')
@@ -23,7 +23,7 @@ def carros(request):
             nomeCarro = nomeCarro,
             combustivelCarro = combustivelCarro,
             especificacaoCarro = especificacaoCarro,
-            marcaCarro_id = marcaCarro,
+            fornecedor_id = fornecedor,
             anoFabricacaoCarro = anoFabricacaoCarro,
             anoModeloCarro = anoModeloCarro,
             chassiCarro = chassiCarro
@@ -33,8 +33,8 @@ def carros(request):
 
 def editar_carro(request,id):
     carro = Carro.objects.get(id=id)
-    marcas = Marca.objects.all()
-    return render(request, 'upd_carro.html', {'carro':carro, 'marcas':marcas})
+    fornecedores = Fornecedor.objects.all()
+    return render(request, 'upd_carro.html', {'carro':carro, 'fornecedores':fornecedores})
 
 def upd_carro(request, id):
     carro = Carro.objects.get(id=id)
@@ -42,7 +42,7 @@ def upd_carro(request, id):
     nomeCarro = request.POST.get('nomeCarro')
     combustivelCarro = request.POST.get('combustivelCarro')
     especificacaoCarro = request.POST.get('especificacaoCarro')
-    marcaCarro_id = request.POST.get('marcaCarro')
+    fornecedor_id = request.POST.get('fornecedor')
     anoFabricacaoCarro = request.POST.get('anoFabricacaoCarro')
     anoModeloCarro = request.POST.get('anoModeloCarro')
     chassiCarro = request.POST.get('chassiCarro')
@@ -51,7 +51,7 @@ def upd_carro(request, id):
     carro.nomeCarro = nomeCarro
     carro.combustivelCarro = combustivelCarro
     carro.especificacaoCarro = especificacaoCarro
-    carro.marcaCarro_id = marcaCarro_id
+    carro.fornecedor_id = fornecedor_id
     carro.anoFabricacaoCarro = anoFabricacaoCarro
     carro.anoModeloCarro = anoModeloCarro
     carro.chassiCarro = chassiCarro

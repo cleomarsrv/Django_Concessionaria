@@ -1,18 +1,11 @@
 from django.db import models
 
-class Marca(models.Model):
-    nomeMarca = models.CharField(max_length=30)
-    cnpjMarca = models.CharField(max_length=14)
-
-    def __str__(self) -> str:
-        return self.nomeMarca
-
 class Fornecedor(models.Model):
-    nomeFornecedor = models.CharField(max_length=30)
-    cnpjFornecedor = models.CharField(max_length=14)
-    marcaFornecida = models.ForeignKey(Marca, on_delete=models.SET_NULL, null=True)
-    emailFornecedor = models.EmailField()
-    enderecoFornecedor = models.CharField(max_length=100)
+    nome = models.CharField(max_length=30)
+    cnpj = models.CharField(max_length=14)
+    email = models.EmailField()
+    telefone = models.CharField(max_length=15)
+    enderecoCompleto = models.CharField(max_length=200)
 
     def __str__(self) -> str:
-        return self.nomeFornecedor
+        return self.nome

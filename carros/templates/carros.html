@@ -13,13 +13,14 @@
                 </div>
 
                 <div class="col-md">
-                    <label>Marca do Carro: </label>        
-                    <select name="marcaCarro" class="form-control">
-                        {% for marca in marcas %}
-                            <option value="{{marca.id}}">{{marca.nomeMarca}}</option>
+                    <label>fornecedor do Carro: </label>        
+                    <select name="fornecedor" class="form-control">
+                        {% for fornecedor in fornecedores %}
+                            <option value="{{fornecedor.id}}">{{fornecedor.nome}}</option>
                         {% endfor %}
                     </select>
                 </div>
+
             </div>
 
             <div class="col-md">
@@ -66,14 +67,14 @@
                 <label> <H5> CARROS CADASTRADOS</H5> </label>
                 <thead>
                     <tr>
-                        <th scope="col">placaCarro</th>
-                        <th scope="col">NomeCarro</th>
-                        <th scope="col">marcaCarro</th>
-                        <th scope="col">combustivelCarro</th>
-                        <th scope="col">especificacaoCarro</th>
-                        <th scope="col">anoFabricacaoCarro</th>
-                        <th scope="col">anoModeloCarro</th>
-                        <th scope="col">chassiCarro</th>
+                        <th scope="col">Placa</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Fornecedor</th>
+                        <th scope="col">combustivel</th>
+                        <th scope="col">Especificação</th>
+                        <th scope="col">Ano Fabrição</th>
+                        <th scope="col">Ano Modelo</th>
+                        <th scope="col">chassi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -81,7 +82,7 @@
                         <tr>
                             <th><a href=" {% url 'editar_carro' carro.id %}">{{ carro.placaCarro }}</a></th>
                             <td>{{carro.nomeCarro}}</td>
-                            <td>{{carro.marcaCarro}}</td>
+                            <td>{{carro.fornecedor}}</td>
                             <td>{{carro.combustivelCarro}}</td>
                             <td>{{carro.especificacaoCarro}}</td>
                             <td>{{carro.anoFabricacaoCarro}}</td>

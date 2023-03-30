@@ -2,14 +2,18 @@
 {% load static %}
 
 {% block 'body' %}
-    <h1> ADEQUAR </h1>
     <form action="{% url 'upd_fornecedor' fornecedor.id %}" method="POST">
         {% csrf_token %}
         <br><br>
         <div class="row">
             <div class="col-md">
                 <label>Nome Fornecedor: </label>
-                <input class="form-control" type="text" name="nomeFornecedor" value="{{fornecedor.nomeFornecedor}}">
+                <input class="form-control" type="text" name="nome" value="{{fornecedor.nome}}">
+            </div>
+
+            <div class="col-md">
+                <label>cnpj</label>
+                <input class="form-control" type="text" name="cnpjFornecedor" value="{{fornecedor.cnpjFornecedor}}">
             </div>
 
             <div class="col-md">
@@ -18,27 +22,15 @@
             </div>
                 
             <div class="col-md">
-                <label>cnpj</label>
-                <input class="form-control" type="text" name="cnpjFornecedor" value="{{fornecedor.cnpjFornecedor}}">
+                <label>Telefone</label>
+                <input class="form-control" type="text" name="telefone" value="{{fornecedor.telefone}}">
             </div>
 
             <div class="col-md">
-                <label>endereco</label>
-                <input class="form-control" type="text" name="enderecoFornecedor" value="{{fornecedor.enderecoFornecedor}}">
+                <label>Endereço: </label>
+                <input class="form-control" type="text" name="enderecoCompleto" value="{{fornecedor.enderecoCompleto}}">
             </div>
             
-            <div class="col-md">
-                <label>Marca fornecedor: </label>        
-                <select name="marcaFornecida" class="form-control">
-                    <option value="{{fornecedor.marcaFornecida.id}}">{{fornecedor.marcaFornecida.nomeMarca}}</option>
-                    {% for marca in marcas %}
-                        {% if not marca.id == fornecedor.marcaFornecida.id %}
-                        <option value="{{marca.id}}">{{marca.nomeMarca}}</option>
-                        {% endif %}
-                    {% endfor %}
-                </select>
-            </div>
-
             <div class="col-md">
                 <input class="btn btn-success" type="submit" value="Atualizar" >
             </div>

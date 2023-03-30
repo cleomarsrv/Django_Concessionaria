@@ -9,22 +9,19 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
+        ('carros', '0001_initial'),
         ('fornecedores', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Carro',
+            name='Compra',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('placaCarro', models.CharField(max_length=7)),
-                ('nomeCarro', models.CharField(max_length=30)),
-                ('combustivelCarro', models.CharField(max_length=20)),
-                ('especificacaoCarro', models.CharField(max_length=100)),
-                ('anoFabricacaoCarro', models.IntegerField()),
-                ('anoModeloCarro', models.IntegerField()),
-                ('chassiCarro', models.CharField(max_length=17)),
-                ('estoque', models.IntegerField(default=0)),
+                ('dataHora', models.DateTimeField()),
+                ('quantidade', models.IntegerField()),
+                ('valorTotal', models.FloatField()),
+                ('carro', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='carros.carro')),
                 ('fornecedor', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='fornecedores.fornecedor')),
             ],
         ),

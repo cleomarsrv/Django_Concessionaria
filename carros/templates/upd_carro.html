@@ -12,10 +12,10 @@
             </div>
 
             <div class="col-md">
-                <label>Marca do Carro: </label>        
-                <select name="marcaCarro" class="form-control">
-                    {% for marca in marcas %}
-                        <option value="{{marca.id}}">{{marca.nomeMarca}}</option>
+                <label>Fornecedor do Carro: </label>        
+                <select name="fornecedor" class="form-control">
+                    {% for fornecedor in fornecedores %}
+                        <option value="{{fornecedor.id}}">{{fornecedor.nome}}</option>
                     {% endfor %}
                 </select>
             </div>

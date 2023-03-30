@@ -1,5 +1,4 @@
 from django.contrib import admin
-from .models import Marca, Fornecedor
+from .models import Fornecedor
 
-admin.site.register(Marca)
 admin.site.register(Fornecedor)

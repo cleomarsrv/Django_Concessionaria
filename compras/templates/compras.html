@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block 'body' %}
+
+    <div class="container">
+
+        <form action="{% url 'compras' %}" method="POST">
+            {% csrf_token %}
+            <br><br>
+            <div class="row">
+                <div class="col-md">
+                    <label>Data e Hora da Compra: </label>
+                    <input class="form-control" type="datetime-local" name="dataHora">
+                </div>
+                    
+                <div class="col-md">
+                    <label>Fornecedor: </label>
+                    <select name="fornecedor" class="form-control">
+                        {% for fornecedor in fornecedores %}
+                            <option value="{{fornecedor.id}}">{{fornecedor.nome}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-md">
+                    <label>Carro</label>
+                    <select name="carro" class="form-control">
+                        {% for carro in carros %}
+                            <option value="{{carro.id}}">{{carro.nomeCarro}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+            </div>
+            
+            <div class="row">
+
+                <div class="col-md">
+                    <label>Quantidade Carros: </label>
+                    <input class="form-control" type="text" name="quantidade">
+                </div>
+
+                <div class="col-md">
+                    <label>Valor Total da Compra: </label>
+                    <input class="form-control" type="text" name="valorTotal">
+                </div>
+
+            </div>
+            <br>
+            <div class="row">
+                
+                <div class="col-md">
+                    <input class="btn btn-success" type="submit" value="Efetivar Compra" >
+                </div>
+                
+            </div>
+        </form>
+
+        <hr style="background-color: gray;">
+
+    </div>
+
+{% endblock %}

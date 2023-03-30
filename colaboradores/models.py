@@ -11,7 +11,7 @@ class Colaborador(Pessoa):
     funcaoAtual = models.CharField(max_length=20)
     salarioAtual = models.DecimalField(max_digits=15, decimal_places=2)
     dataAdmissao = models.DateField()
-    dataDesligamento = models.DateField()
+    dataDesligamento = models.DateField(null=True)
     situacaoVinculo = models.CharField(max_length=20)
 
 '''

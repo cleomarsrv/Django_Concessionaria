@@ -3,59 +3,35 @@
 {% block 'body' %}
     <div class="container">
 
-        <form action="{% url 'marcas' %}" method="POST">
-            {% csrf_token %}
-            <br><br>
-            <div class="row">
-                <div class="col-md">
-                    <label>Nome Marca: </label>
-                    <input class="form-control" type="text" name="nomeMarca">
-                </div>
-
-                <div class="col-md">
-                    <label>CNPJ Marca</label>
-                    <input class="form-control" type="text" name="cnpjMarca">
-                </div>
-
-                <div class="col-md">
-                    <input class="btn btn-success" type="submit" value="Enviar" >
-                </div>                
-            </div>
-        </form>
-
         <form action="{% url 'fornecedores' %}" method="POST">
             {% csrf_token %}
             <br><br>
             <div class="row">
                 <div class="col-md">
                     <label>Nome Fornecedor: </label>
-                    <input class="form-control" type="text" name="nomeFornecedor">
+                    <input class="form-control" type="text" name="nome">
                 </div>
 
                 <div class="col-md">
-                    <label>CNPJ fornecedor</label>
-                    <input class="form-control" type="text" name="cnpjFornecedor">
-                </div>
-
-                <div class="col-md">
-                    <label>Marca Fornecida: </label>        
-                    <select name="marcaFornecida" class="form-control">
-                        {% for marca in marcas %}
-                            <option value="{{marca.id}}">{{marca.nomeMarca}}</option>
-                        {% endfor %}
-                    </select>
+                    <label>CNPJ</label>
+                    <input class="form-control" type="text" name="cnpj">
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md">
                     <label>Email: </label>
-                    <input class="form-control" type="email" name="emailFornecedor">
+                    <input class="form-control" type="email" name="email">
                 </div>
                 
                 <div class="col-md">
-                    <label>Endereco</label>
-                    <input class="form-control" type="text" name="enderecoFornecedor">
+                    <label>Telefone: </label>
+                    <input class="form-control" type="text" name="telefone">
+                </div>
+
+                <div class="col-md">
+                    <label>Endereco Completo (rua, numero, bairro, cidade/UF)</label>
+                    <input class="form-control" type="text" name="enderecoCompleto">
                 </div>
 
                 <div class="col-md">
@@ -68,24 +44,24 @@
 
         <div class="container">
             <table class="table table-dark">
-                <label> <H5> FORNECEDORES CADASTRADOS</H5> </label>
+                <label> <H5>FORNECEDORES CADASTRADOS</H5> </label>
                 <thead>
                     <tr>
                         <th scope="col">CNPJ</th>
-                        <th scope="col">Nome Fornecedor</th>
-                        <th scope="col">Marca</th>
-                        <th scope="col">Endereco</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Telefone</th>
                         <th scope="col">Email</th>
+                        <th scope="col">Endereco</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for fornecedor in fornecedores %}
                         <tr>
-                            <th><a href=" {% url 'editar_fornecedor' fornecedor.id %}">{{ fornecedor.cnpjFornecedor }}</a></th>
-                            <td>{{fornecedor.nomeFornecedor}}</td>
-                            <td>{{fornecedor.marcaFornecida}}</td>
-                            <td>{{fornecedor.enderecoFornecedor}}</td>
-                            <td>{{fornecedor.emailFornecedor}}</td>
+                            <th><a href=" {% url 'editar_fornecedor' fornecedor.id %}">{{ fornecedor.cnpj }}</a></th>
+                            <td>{{fornecedor.nome}}</td>
+                            <td>{{fornecedor.telefone}}</td>
+                            <td>{{fornecedor.email}}</td>
+                            <td>{{fornecedor.enderecoCompleto}}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -93,7 +69,5 @@
             </table>
             
         </div>
-
-    </div>
 
 {% endblock %}
