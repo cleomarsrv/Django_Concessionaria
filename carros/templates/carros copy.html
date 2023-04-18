@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block 'body' %}
+    <div class="container">
+
+        <form action="{% url 'carros' %}" method="POST" enctype='multipart/form-data'>
+            {% csrf_token %}
+            <br><br>
+            <div class="row">
+                <div class="col-md">
+                    <label>Nome Carro: </label>
+                    <input class="form-control" type="text" name="nomeCarro">
+                </div>
+
+            </div>
+
+            <div class="col-md">
+                <label>placa Carro</label>
+                <input class="form-control" type="text" name="placaCarro">
+            </div>
+
+            <div class="col-md">
+                <label>Tipo Combustivel</label>
+                <input class="form-control" type="text" name="combustivelCarro">
+            </div>
+            
+            <div class="col-md">
+                <label>Detalhes ou especificações do Carro: </label>
+                <input class="form-control" type="text" name="especificacaoCarro">
+            </div>
+            
+            <div class="col-md">
+                <label>chassi</label>
+                <input class="form-control" type="text" name="chassiCarro">
+            </div>
+
+            <div class="row">
+                <div class="col-md">
+                    <label> Ano Fabricação: </label>
+                    <input class="form-control" type="number" name="anoFabricacaoCarro">
+                </div>
+                
+                <div class="col-md">
+                    <label> Ano Modelo: </label>
+                    <input class="form-control" type="number" name="anoModeloCarro">
+                </div>
+                
+                <label> Imagem do Carro: </label>
+                <input type="file" name="imagem" class="form-control">
+
+                <div class="col-md">
+                    <input class="btn btn-success" type="submit" value="Cadastrar Carros" >
+                </div>
+            </div>
+        </form>
+
+        <hr style="background-color: gray;">
+
+        <div class="container">
+            <table class="table table-dark">
+                <label> <H5> CARROS CADASTRADOS</H5> </label>
+                <thead>
+                    <tr>
+                        <th scope="col">Placa</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Fornecedor</th>
+                        <th scope="col">combustivel</th>
+                        <th scope="col">Especificação</th>
+                        <th scope="col">Ano Fabrição</th>
+                        <th scope="col">Ano Modelo</th>
+                        <th scope="col">chassi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for carro in carros %}
+                        <tr>
+                            <th><a href=" {% url 'editar_carro' carro.id %}">{{ carro.placaCarro }}</a></th>
+                            <td>{{carro.nomeCarro}}</td>
+                            <td>{{carro.fornecedor}}</td>
+                            <td>{{carro.combustivelCarro}}</td>
+                            <td>{{carro.especificacaoCarro}}</td>
+                            <td>{{carro.anoFabricacaoCarro}}</td>
+                            <td>{{carro.anoModeloCarro}}</td>
+                            <td>{{carro.chassiCarro}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                
+            </table>
+            
+        </div>
+
+    </div>
+
+{% endblock %}

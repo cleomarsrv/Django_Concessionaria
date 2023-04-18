@@ -5,6 +5,7 @@ from .models import Venda
 from carros.models import Carro
 from clientes.models import Cliente
 from colaboradores.models import Colaborador
+from django.contrib import messages
 
 def vendas(request):
     if request.method == "GET":
@@ -14,22 +15,31 @@ def vendas(request):
         colaboradores = Colaborador.objects.all()
         return render(request, 'vendas.html', {'vendas':vendas,'clientes':clientes,'carros':carros, 'colaboradores':colaboradores})
     elif request.method == "POST":
-        venda = Venda()
-
-        venda.dataHora = request.POST.get('dataHora')
-        venda.detalhes = request.POST.get('detalhes')
-        venda.cliente_id = request.POST.get('cliente')
-        venda.carro_id = request.POST.get('carro')
-        venda.colaborador_id = request.POST.get('colaborador')
-        venda.valorVenda = request.POST.get('valorVenda')
-        venda.formaPagamento = request.POST.get('formaPagamento')
-
-        try:
-            venda.save()
+        carro_id = request.POST.get('carro_id')
+        carro = Carro.objects.get(id=carro_id)
+        if carro.estoque > 0:
+            venda = Venda()
+            venda.dataHora = request.POST.get('dataHora')
+            venda.detalhes = request.POST.get('detalhes')
+            venda.cliente_id = request.POST.get('cliente')
+            venda.carro_id = carro_id
+            venda.colaborador_id = request.POST.get('colaborador')
+            venda.valorVenda = request.POST.get('valorVenda')
+            venda.formaPagamento = request.POST.get('formaPagamento')
+            venda.situacao = 'P'
+            carro.estoque -= 1
+            try:
+                venda.save()
+                carro.save()
+                messages.add_message(request, messages.SUCCESS, 'venda efetuada com sucesso!')
+                return redirect(reverse('vendas'))
+            except:
+                messages.add_message(request, messages.ERROR, 'erro ao efetivar a venda' )
+                return redirect(reverse('vendas'))
+            
+        else:
+            messages.add_message(request, messages.ERROR, f' Nao há estoque do carro {carro.nomeCarro}')
             return redirect(reverse('vendas'))
-        except:
-            return HttpResponse('erro ao efetivar a venda')
-
 
 def editar_venda(request, id):
     return HttpResponse('editando venda')

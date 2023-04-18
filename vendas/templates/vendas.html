@@ -4,6 +4,18 @@
 
     <div class="container">
 
+        {% if messages %}
+            <br>
+            {% for message in messages %}
+                <div class="alert {{message.tags}}">{{message}}</div>
+                
+                <script>
+                    alert('{{ message }}');
+                </script>
+
+            {% endfor %}
+        {% endif %}
+
         <form action="{% url 'vendas' %}" method="POST">
             {% csrf_token %}
             <br><br>
@@ -38,7 +50,7 @@
                 
                 <div class="col-md">
                     <label>Carro</label>
-                    <select name="carro" class="form-control">
+                    <select name="carro_id" class="form-control">
                         {% for carro in carros %}
                             <option value="{{carro.id}}">{{carro.nomeCarro}}</option>
                         {% endfor %}

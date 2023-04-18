@@ -1,16 +1,71 @@
 from django.db import models
 from fornecedores.models import Fornecedor
+from django.template.defaultfilters import slugify
+
+class Seguranca(models.Model):
+    item = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.item
+    
+class Combustivel(models.Model):
+    tipo = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.tipo
+    
+class Acessorio(models.Model):
+    item = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.item
+    
+class Motor(models.Model):
+    nome = models.CharField(max_length=50)
+    cv = models.IntegerField()
+    torque = models.FloatField()
+    rpm = models.IntegerField()
+    valvulas = models.IntegerField()
+    cilindros = models.IntegerField(default=3)
+
+    def __str__(self):
+        return self.nome
+
+class Direcao(models.Model):
+    tipo = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.tipo
 
 class Carro(models.Model):
-    placaCarro = models.CharField(max_length=7)
-    nomeCarro = models.CharField(max_length=30)
-    combustivelCarro = models.CharField(max_length=20)
-    especificacaoCarro = models.CharField(max_length=100)
-    fornecedor = models.ForeignKey(Fornecedor, on_delete=models.SET_NULL, null=True)
-    anoFabricacaoCarro = models.IntegerField()
-    anoModeloCarro = models.IntegerField()
-    chassiCarro = models.CharField(max_length=17)
-    estoque = models.IntegerField(default=0)
+    nome = models.CharField(max_length=30, unique=True)
+    slugCarro = models.SlugField(unique=True, null=True, blank=True)
 
     def __str__(self) -> str:
-        return self.nomeCarro
+        return self.nome
+
+    def save(self, *args, **kwargs):
+        if not self.slugCarro:
+            self.slugCarro = slugify(self.nome)
+        return super().save(*args, **kwargs)
+    
+class Versao(models.Model):
+    nome = models.CharField(max_length=50, unique=True)
+    imagem = models.ImageField(upload_to='carros')
+    estoque = models.IntegerField(default=0)
+    seguranca = models.ManyToManyField(Seguranca, related_name="versao_seguranca", blank=True)
+    direcao = models.ForeignKey(Direcao, on_delete=models.DO_NOTHING)
+    carro = models.ForeignKey(Carro, on_delete=models.DO_NOTHING)
+    motor = models.ForeignKey(Motor, on_delete=models.DO_NOTHING)
+    combustivel = models.ForeignKey(Combustivel, on_delete=models.DO_NOTHING)
+    acessorio = models.ManyToManyField(Acessorio, related_name="versao_acessorio", blank=True)
+    slugVersao = models.SlugField(unique=True, null=True, blank=True)
+
+    def __str__(self):
+        return self.nome
+    
+    def save(self, *args, **kwargs):
+        if not self.slugVersao:
+            self.slugVersao = slugify(self.nome)
+        return super().save(*args, **kwargs)
+    
