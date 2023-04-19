@@ -2,6 +2,11 @@
 {% load static %}
 
 {% block 'body' %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
     <form action="{% url 'upd_carro' carro.id %}" method="POST">
         {% csrf_token %}
         <br><br>

@@ -2,7 +2,12 @@
 
 {% block 'body' %}
     <div class="container">
-
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        
         <form action="{% url 'carros' %}" method="POST" enctype='multipart/form-data'>
             {% csrf_token %}
             <br><br>

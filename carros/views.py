@@ -17,7 +17,7 @@ def carros(request, slugCarro=None):
             versoes = None
         
         if versoes:
-            return redirect(reverse('versoes'))
+            return redirect(reverse('versoes', kwargs={'slugVersao':None}))
 
         context = {
             'carros':carros,
@@ -31,30 +31,29 @@ def carros(request, slugCarro=None):
             nome = nome,
         )
         carro.save()
-        messages.add_message(request, constants.SUCCESS, 'carro cadastrado com sucesso')
-        return redirect(reverse('carros'))
+        messages.add_message(request, constants.SUCCESS, f'carro {nome} cadastrado com sucesso')
+        messages.add_message(request, constants.INFO, 'cadastre agora uma versão:')
+        slugCarro = carro.slugCarro
+        return redirect(reverse('cadastrar_versao', kwargs={'slugCarro':slugCarro}))
 
-def versoes(request,slugVersao=None):
+def versoes(request, slugCarro):
+    carroSelecionado = Carro.objects.get(slugCarro=slugCarro)
+    versoes = Versao.objects.filter(carro__id=carroSelecionado.id)
+    carros = Carro.objects.all()
+
+    testeVersao =Versao.objects.get(id=1)
+    print(testeVersao.imagem.url)
+
+    context = {
+        'versoes':versoes,
+        'carroSelecionado':carroSelecionado,
+        'carros':carros,
+    }
+    return render(request, 'carros_versoes.html', context=context)
+
+def cadastrar_versao(request, slugCarro):
     if request.method == "GET":
-        idTeste = 1
-        carroSelecionado = Carro.objects.get(id=idTeste)
-        versoes = Versao.objects.filter(carro__id=idTeste)
-        carros = Carro.objects.all()
-    
-        context = {
-            'versoes':versoes,
-            # 'carroSelecionado':carroSelecionado,
-            'carros':carros,
-        }
-        return HttpResponse(f'mostrando slugVersao = {slugVersao}')
-        #return render(request, 'carros.html', context=context)
-    elif request.method == "POST":
-        return HttpResponse('estou em versoes via metodo POST')
-
-def cadastrar_versao(request, id):
-    if request.method == "GET":
-        carro = Carro.objects.get(id=id)
-
+        carro = Carro.objects.get(slugCarro=slugCarro)
         segurancas = Seguranca.objects.all()
         direcoes = Direcao.objects.all()
         motores = Motor.objects.all()
@@ -77,25 +76,26 @@ def cadastrar_versao(request, id):
         segurancas = request.POST.getlist('seguranca')
         
         direcao = request.POST.get('direcao')
-        carro = id
+        carro = Carro.objects.get(slugCarro=slugCarro)
         motor = request.POST.get('motor')
         combustivel = request.POST.get('combustivel')
         acessorios = request.POST.getlist('acessorio')
+        slugCarro = carro.slugCarro
 
         versao = Versao(
             nome = nome,
             imagem = imagem,
             #seguranca = seguranca,
             direcao_id = direcao,
-            carro_id = carro,
+            carro_id = carro.id,
             motor_id = motor,
             combustivel_id = combustivel,
             #acessorio = acessorio,
         )
 
         versao.save()
-
-        return redirect(reverse('carros'))
+        messages.add_message(request, constants.SUCCESS, 'versão cadastrada com sucesso.')
+        return redirect(reverse('versoes', kwargs={'slugCarro':slugCarro}))
 
 
 def editar_carro(request,id):

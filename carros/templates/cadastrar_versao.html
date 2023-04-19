@@ -3,10 +3,16 @@
 {% block 'body' %}
     <div class="container">
 
-        <form action="{% url 'cadastrar_versao' carro.id %}" method="POST" enctype='multipart/form-data'>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        
+        <form action="{% url 'cadastrar_versao' carro.slugCarro %}" method="POST" enctype='multipart/form-data'>
             {% csrf_token %}
             <br><br>
-
+            <label> <H5> {{carro.nome}}</H5> </label>
             <div class="row">
                 <div class="col-md-4">
                     <label>Nome Versao: </label>
