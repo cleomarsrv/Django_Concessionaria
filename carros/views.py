@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from fornecedores.models import Fornecedor
+from carros.forms import FormVersao
 
 def carros(request, slugCarro=None):
     if request.method == "GET":
@@ -42,7 +43,6 @@ def versoes(request, slugCarro):
     carros = Carro.objects.all()
 
     testeVersao =Versao.objects.get(id=1)
-    print(testeVersao.imagem.url)
 
     context = {
         'versoes':versoes,
@@ -52,51 +52,29 @@ def versoes(request, slugCarro):
     return render(request, 'carros_versoes.html', context=context)
 
 def cadastrar_versao(request, slugCarro):
+    carro = Carro.objects.get(slugCarro=slugCarro)
     if request.method == "GET":
-        carro = Carro.objects.get(slugCarro=slugCarro)
-        segurancas = Seguranca.objects.all()
-        direcoes = Direcao.objects.all()
-        motores = Motor.objects.all()
-        combustiveis = Combustivel.objects.all()
-        acessorios = Acessorio.objects.all()
-        
+        form = FormVersao()
         context = {
             'carro':carro,
-            'segurancas':segurancas,
-            'direcoes':direcoes,
-            'motores':motores,
-            'combustiveis':combustiveis,
-            'acessorios':acessorios,
+            'form':form
         }
         return render(request, 'cadastrar_versao.html', context=context)
     elif request.method == "POST":
-        nome = request.POST.get('nome')
-        imagem = request.FILES.get('imagem')
-        
-        segurancas = request.POST.getlist('seguranca')
-        
-        direcao = request.POST.get('direcao')
-        carro = Carro.objects.get(slugCarro=slugCarro)
-        motor = request.POST.get('motor')
-        combustivel = request.POST.get('combustivel')
-        acessorios = request.POST.getlist('acessorio')
-        slugCarro = carro.slugCarro
+        form = FormVersao(request.POST)
 
-        versao = Versao(
-            nome = nome,
-            imagem = imagem,
-            #seguranca = seguranca,
-            direcao_id = direcao,
-            carro_id = carro.id,
-            motor_id = motor,
-            combustivel_id = combustivel,
-            #acessorio = acessorio,
-        )
-
-        versao.save()
+    if form.is_valid():
+        form.save()
         messages.add_message(request, constants.SUCCESS, 'versão cadastrada com sucesso.')
-        return redirect(reverse('versoes', kwargs={'slugCarro':slugCarro}))
+    else:
+        context = {
+            'carro':carro,
+            'form':form
+        }
+        return render(request, 'cadastrar_versao.html', context=context)
 
+    slugCarro = carro.slugCarro
+    return redirect(reverse('versoes', kwargs={'slugCarro':slugCarro}))
 
 def editar_carro(request,id):
     carro = Carro.objects.get(id=id)

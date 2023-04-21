@@ -50,15 +50,15 @@ class Carro(models.Model):
         return super().save(*args, **kwargs)
     
 class Versao(models.Model):
-    nome = models.CharField(max_length=50, unique=True)
-    imagem = models.ImageField(upload_to='carros')
-    estoque = models.IntegerField(default=0)
-    seguranca = models.ManyToManyField(Seguranca, related_name="versao_seguranca", blank=True)
-    direcao = models.ForeignKey(Direcao, on_delete=models.DO_NOTHING)
     carro = models.ForeignKey(Carro, on_delete=models.DO_NOTHING)
+    nome = models.CharField(max_length=50, unique=True)
     motor = models.ForeignKey(Motor, on_delete=models.DO_NOTHING)
     combustivel = models.ForeignKey(Combustivel, on_delete=models.DO_NOTHING)
+    direcao = models.ForeignKey(Direcao, on_delete=models.DO_NOTHING)
+    seguranca = models.ManyToManyField(Seguranca, related_name="versao_seguranca", blank=True)
     acessorio = models.ManyToManyField(Acessorio, related_name="versao_acessorio", blank=True)
+    imagem = models.ImageField(upload_to='carros', blank=True, null=True)
+    estoque = models.IntegerField(default=0) 
     slugVersao = models.SlugField(unique=True, null=True, blank=True)
 
     def __str__(self):

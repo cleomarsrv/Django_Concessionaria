@@ -11,73 +11,41 @@
         
         <form action="{% url 'cadastrar_versao' carro.slugCarro %}" method="POST" enctype='multipart/form-data'>
             {% csrf_token %}
-            <br><br>
-            <label> <H5> {{carro.nome}}</H5> </label>
-            <div class="row">
-                <div class="col-md-4">
-                    <label>Nome Versao: </label>
-                    <input class="form-control" type="text" name="nome">
-                </div>
-                
-                <div class="col-md-3">
-                    <select class="form-control" name="direcao">
-                        <option value="">Selecione direção</option>
-                        {% for direcao in direcoes %}
-                            <option value="{{direcao.id}}">{{direcao.tipo}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <div class="col-md-3">
-                    <select class="form-control" name="combustivel">
-                        <option value="">Selecione combustível</option>
-                        {% for combustivel in combustiveis %}
-                            <option value="{{combustivel.id}}">{{combustivel.tipo}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-4">
-                    <select class="form-control" name="motor">
-                        <option value="">Selecione Motor</option>
-                        {% for motor in motores %}
-                            <option value="{{motor.id}}">{{motor.nome}}</option>
-                        {% endfor %}
-                    </select>
-                </div>          
-
-                <div class="col-md-4">
-                    <select class="form-control" name="acessorio" multiple size="6">
-                        <option value="">Acessórios (pressione Ctrl p/ vários)</option>
-                        {% for acessorio in acessorios %}
-                            <option value="{{acessorio.id}}">{{acessorio.item}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <div class="col-md-4">
-                    <select class="form-control" name="seguranca" multiple size="6">
-                        <option value="">Seguranca (pressione Ctrl p/ vários)</option>
-                        {% for seguranca in segurancas %}
-                            <option value="{{seguranca.id}}">{{seguranca.item}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <div class="col-md-4">
-                    <label> Imagem da Versão: </label>
-                    <input type="file" name="imagem" class="form-control">
-                </div>
-            </div>
+            <br>
+            <h5>CADASTRO DE NOVA VERSÃO: </h5>
             <br>
             <div class="row">
-                <div class="col-md">
-                    <input class="btn btn-success" type="submit" value="Cadastrar Versão" >
+                
+                <div class="col-md-5">
+                        {{form.nome.label}}
+                        {{form.nome}}
+                        <br>
+                        {{form.motor.label}}
+                        {{form.motor}}
+                        <br>
+                        {{form.seguranca.label}}
+                        {{form.seguranca}}
+                        <br>
+                        {{form.imagem.label}}
+                        {{form.imagem}}
+                        <br>
+                </div>
+                
+                <div class="col-md-5">
+                        {{form.combustivel.label}}
+                        {{form.combustivel}}
+                        <br>
+                        {{form.direcao.label}}
+                        {{form.direcao}}
+                        <br>
+                        {{form.acessorio.label}}
+                        {{form.acessorio}}
+                        <br><br>
+                        {{form.carro}}
+                        
                 </div>
             </div>
-            </div>
+            <input class="btn btn-success" type="submit" value="Cadastrar Versão" >
         </form>
 
     </div>

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
+
 {% block 'body' %}
     <div class="container">
         <br><br>
@@ -58,7 +59,7 @@
             {% for versao in versoes %}
                 <div class="col-md">
                     <div style="background-color: #0f0f0f; width: 18rem" class="card" style="width: 18rem;">
-                        <img width="100%" class="card-img-top" src="/media/{{versao.imagem}}">
+                        <img width="100%" class="card-img-top" src="{{versao.imagem.url}}">
                         <div class="card-body">
                             <h5 class="card-title">{{versao.nome}}</h5>
                             <a href="#" class="btn btn-primary">Detalhes</a>

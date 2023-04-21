@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block 'body' %}
+    <div class="container">
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        
+        <form action="{% url 'cadastrar_versao' carro.slugCarro %}" method="POST" enctype='multipart/form-data'>
+            {% csrf_token %}
+            {{form}}
+            <input type="submit" value="cadastrar versao">
+
+        </form>
+
+    </div>
+
+{% endblock %}
