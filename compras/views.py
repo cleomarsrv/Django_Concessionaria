@@ -1,40 +1,41 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from fornecedores.models import Fornecedor
-from carros.models import Carro
+from carros.models import Carro, Versao
 from .models import Compra
 from django.urls import reverse
+from django.contrib import messages
+
 
 def compras(request):
     if request.method == "GET":
-        fornecedores = Fornecedor.objects.all()
         carros = Carro.objects.all()
+        versoes = Versao.objects.all()
         compras = Compra.objects.all()
         context = {
-            'fornecedores':fornecedores,
             'carros':carros,
+            'versoes':versoes,
             'compras':compras
         }
         return render(request, 'compras.html', context=context)
     elif request.method == "POST":
-        carro_id = request.POST.get('carro')
+        versao_id = request.POST.get('versao')
         quantidade = request.POST.get('quantidade')
 
         compra = Compra()
-        carro = Carro.objects.get(id=carro_id)
+        versao = Versao.objects.get(id=versao_id)
         compra.dataHora = request.POST.get('dataHora')
-        compra.carro_id = carro_id
-        compra.fornecedor_id = request.POST.get('fornecedor')
+        compra.versao_id = versao_id
         compra.quantidade = quantidade
         compra.valorTotal = request.POST.get('valorTotal')
         
-        carro.estoque += int(quantidade)
+        versao.estoque += int(quantidade)
 
         try:
             compra.save()
-            carro.save()
+            versao.save()
+            messages.add_message(request, messages.constants.SUCCESS, 'compra efetuada com sucesso')
             return redirect(reverse('compras'))
         except:
-            return HttpResponse('erro ao efetivar a compra')
-        
+            messages.add_message(request, messages.constants.ERROR, 'erro ao efetivar a compra, tente novamente.')
+            return redirect(reverse('compras'))
     

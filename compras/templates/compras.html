@@ -4,29 +4,35 @@
 
     <div class="container">
 
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {{message.tags}}">{{message}}</div>
+            {% endfor %}
+        {% endif %}
+
         <form action="{% url 'compras' %}" method="POST">
             {% csrf_token %}
             <br><br>
             <div class="row">
-                <div class="col-md">
+                <div class="col-md-3">
                     <label>Data e Hora da Compra: </label>
                     <input class="form-control" type="datetime-local" name="dataHora">
                 </div>
                     
-                <div class="col-md">
-                    <label>Fornecedor: </label>
-                    <select name="fornecedor" class="form-control">
-                        {% for fornecedor in fornecedores %}
-                            <option value="{{fornecedor.id}}">{{fornecedor.nome}}</option>
+                <div class="col-md-3">
+                    <label>Carro</label>
+                    <select name="carro" class="form-control">
+                        {% for carro in carros %}
+                            <option value="{{carro.id}}">{{carro.nome}}</option>
                         {% endfor %}
                     </select>
                 </div>
 
-                <div class="col-md">
-                    <label>Carro</label>
-                    <select name="carro" class="form-control">
-                        {% for carro in carros %}
-                            <option value="{{carro.id}}">{{carro.nomeCarro}}</option>
+                <div class="col-md-3">
+                    <label>Versão</label>
+                    <select name="versao" class="form-control">
+                        {% for versao in versoes %}
+                            <option value="{{versao.id}}">{{versao.nome}}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -35,25 +41,23 @@
             
             <div class="row">
 
-                <div class="col-md">
+                <div class="col-md-3">
                     <label>Quantidade Carros: </label>
                     <input class="form-control" type="number" name="quantidade">
                 </div>
 
-                <div class="col-md">
+                <div class="col-md-3">
                     <label>Valor Total da Compra: </label>
                     <input class="form-control" type="text" name="valorTotal">
+                </div>
+                
+
+                <div class="col-md-3" style="align-self:self-end;">
+                    <input class="btn btn-success" type="submit" value="Efetivar Compra" >
                 </div>
 
             </div>
             <br>
-            <div class="row">
-                
-                <div class="col-md">
-                    <input class="btn btn-success" type="submit" value="Efetivar Compra" >
-                </div>
-                
-            </div>
         </form>
 
         <hr style="background-color: gray;">
@@ -64,8 +68,8 @@
                 <thead>
                     <tr>
                         <th scope="col">Data e hora</th>
-                        <th scope="col">Fornecedor</th>
                         <th scope="col">Carro</th>
+                        <th scope="col">Versão</th>
                         <th scope="col">Quantidade</th>
                         <th scope="col">Valor Total</th>
                     </tr>
@@ -74,8 +78,8 @@
                     {% for compra in compras %}
                         <tr>
                             <td>{{compra.dataHora}}</td>
-                            <td>{{compra.fornecedor}}</td>
-                            <td>{{compra.carro}}</td>
+                            <td>{{compra.versao}}</td>
+                            <td>{{compra.versao}}</td>
                             <td>{{compra.quantidade}}</td>
                             <td>{{compra.valorTotal}}</td>
                         </tr>

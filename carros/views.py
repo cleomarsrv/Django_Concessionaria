@@ -7,6 +7,7 @@ from django.urls import reverse
 from fornecedores.models import Fornecedor
 from carros.forms import FormVersao
 
+
 def carros(request, slugCarro=None):
     if request.method == "GET":
         carros = Carro.objects.all()
@@ -42,8 +43,6 @@ def versoes(request, slugCarro):
     versoes = Versao.objects.filter(carro__id=carroSelecionado.id)
     carros = Carro.objects.all()
 
-    testeVersao =Versao.objects.get(id=1)
-
     context = {
         'versoes':versoes,
         'carroSelecionado':carroSelecionado,
@@ -67,6 +66,7 @@ def cadastrar_versao(request, slugCarro):
         form.save()
         messages.add_message(request, constants.SUCCESS, 'versão cadastrada com sucesso.')
     else:
+        
         context = {
             'carro':carro,
             'form':form
