@@ -6,11 +6,16 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from fornecedores.models import Fornecedor
 from carros.forms import FormVersao
+from django.views import generic
 
 
 def carros(request, slugCarro=None):
     if request.method == "GET":
         carros = Carro.objects.all()
+        metade = len(carros) // 2
+        coluna1 = carros[:metade]
+        coluna2 = carros[metade:]
+
         try:
             carroSelecionado = Carro.objects.get(slugCarro=slugCarro)
             versoes = Versao.objects.filter(carro__id = carroSelecionado.id)
@@ -19,14 +24,15 @@ def carros(request, slugCarro=None):
             versoes = None
         
         if versoes:
-            return redirect(reverse('versoes', kwargs={'slugVersao':None}))
+            return redirect(reverse('carros:versoes', kwargs={'slugVersao':None}))
 
         context = {
-            'carros':carros,
+            'coluna1':coluna1,
+            'coluna2':coluna2,
             'versoes':versoes,
             'carroSelecionado':carroSelecionado,
         }
-        return render(request, 'carros.html', context=context)
+        return render(request, 'carros/carros.html', context=context)
     elif request.method == "POST":
         nome = request.POST.get('nome')
         carro = Carro(
@@ -36,7 +42,7 @@ def carros(request, slugCarro=None):
         messages.add_message(request, constants.SUCCESS, f'carro {nome} cadastrado com sucesso')
         messages.add_message(request, constants.INFO, 'cadastre agora uma versão:')
         slugCarro = carro.slugCarro
-        return redirect(reverse('cadastrar_versao', kwargs={'slugCarro':slugCarro}))
+        return redirect(reverse('carros:cadastrar_versao', kwargs={'slugCarro':slugCarro}))
 
 def versoes(request, slugCarro):
     carroSelecionado = Carro.objects.get(slugCarro=slugCarro)
@@ -48,7 +54,7 @@ def versoes(request, slugCarro):
         'carroSelecionado':carroSelecionado,
         'carros':carros,
     }
-    return render(request, 'carros_versoes.html', context=context)
+    return render(request, 'carros/carros_versoes.html', context=context)
 
 def cadastrar_versao(request, slugCarro):
     carro = Carro.objects.get(slugCarro=slugCarro)
@@ -58,7 +64,7 @@ def cadastrar_versao(request, slugCarro):
             'carro':carro,
             'form':form
         }
-        return render(request, 'cadastrar_versao.html', context=context)
+        return render(request, 'carros/cadastrar_versao.html', context=context)
     elif request.method == "POST":
         form = FormVersao(request.POST, request.FILES)
 
@@ -66,15 +72,15 @@ def cadastrar_versao(request, slugCarro):
         form.save()
         messages.add_message(request, constants.SUCCESS, 'versão cadastrada com sucesso.')
     else:
-        
+        messages.add_message(request, constants.ERROR, form.errors)
         context = {
             'carro':carro,
-            'form':form
+            'form':form,
         }
-        return render(request, 'cadastrar_versao.html', context=context)
+        return render(request, 'carros/cadastrar_versao.html', context=context)
 
     slugCarro = carro.slugCarro
-    return redirect(reverse('versoes', kwargs={'slugCarro':slugCarro}))
+    return redirect(reverse('carros:versoes', kwargs={'slugCarro':slugCarro}))
 
 def editar_carro(request,id):
     carro = Carro.objects.get(id=id)
@@ -101,4 +107,9 @@ def upd_carro(request, id):
     carro.anoModeloCarro = anoModeloCarro
     carro.chassiCarro = chassiCarro
     carro.save()
-    return redirect(reverse('carros'))
+    return redirect(reverse('carros:carros'))
+
+class versaoDetalheView(generic.DetailView):
+    model = Versao
+    template_name='carros/versao_detalhe.html'
+    

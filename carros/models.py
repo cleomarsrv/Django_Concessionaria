@@ -67,8 +67,8 @@ class Versao(models.Model):
     seguranca = models.ManyToManyField(Seguranca, related_name="versao_seguranca", blank=True)
     acessorio = models.ManyToManyField(Acessorio, related_name="versao_acessorio", blank=True)
     imagem = models.ImageField(upload_to='carros', blank=True, null=True)
-    ano = models.IntegerField()
-    modelo = models.IntegerField()
+    ano = models.IntegerField(default='2023')
+    modelo = models.IntegerField(default='2023')
     estoque = models.IntegerField(default=0) 
     slugVersao = models.SlugField(unique=True, null=True, blank=True)
 

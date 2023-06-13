@@ -2,6 +2,7 @@ from django import forms
 from .models import Versao
 
 class FormVersao(forms.ModelForm):
+    
     class Meta:
         model = Versao
         fields = "__all__"

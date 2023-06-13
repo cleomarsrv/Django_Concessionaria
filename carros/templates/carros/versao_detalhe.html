@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block 'body' %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <h3>Versão: {{versao}}</h3>
+
+                <p>Carro: {{versao.carro}}</p>
+                <p>Combustivel: {{versao.combustivel}}</p>
+                <h6>Itens de Seguranca:</h6>
+                    <ul>
+                        {% for item in versao.seguranca.all %}
+                            <li>{{item}}</li>    
+                        {% endfor %}
+                    </ul>
+                <h6>Acessorios:</h6>
+                <ul>
+                    {% for item in versao.acessorio.all %}
+                        <li>{{item}}</li>    
+                    {% endfor %}
+                </ul>
+                <p>Ano: {{versao.ano}}</p>
+                <p>Modelo: {{versao.modelo}}</p>
+                <p>Estoque: {{versao.estoque}}</p>
+            </div>
+            <div class="col-md-9">
+                <div style="background-color: #0f0f0f; width: 50rem;">
+                    <img width="100%" src="{{versao.imagem.url}}">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -12,7 +12,7 @@
                     <table class="table table-dark">
                         <thead>
                             <tr>
-                                <a href=" {% url 'cadastrar_versao' carroSelecionado.slugCarro %}">Nova Versao</a>
+                                <a href=" {% url 'carros:cadastrar_versao' carroSelecionado.slugCarro %}">Nova Versao</a>
                             </tr>
                             <tr>
                                 <th scope="col">{{ carroSelecionado.nome }}</th>
@@ -23,7 +23,7 @@
                             <tbody>
                                 {% for versao in versoes %}
                                     <tr>
-                                        <th><a href=" {% url 'versoes' carroSelecionado.slugCarro %}">{{ versao.nome }}</a></th>
+                                        <th><a href=" {% url 'carros:detalhe' carroSelecionado.slugCarro versao.id %}">{{ versao.nome }}</a></th>
                                         <th></th>
                                     </tr>
                                 {% endfor %}
@@ -46,7 +46,7 @@
                                     <img width="100%" class="card-img-top" src="{{versao.imagem.url}}">
                                     <div class="card-body">
                                         <h5 class="card-title">{{versao.nome}}</h5>
-                                        <a href="#" class="btn btn-primary">Detalhes</a>
+                                        <a href="{% url 'carros:detalhe' carroSelecionado.slugCarro versao.id %}" class="btn btn-primary">Detalhes</a>
                                     </div>
                                 </div>
                                 <br>

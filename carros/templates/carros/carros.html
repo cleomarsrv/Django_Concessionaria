@@ -2,14 +2,13 @@
 
 {% block 'body' %}
     <div class="container">
-
         {% if messages %}
             {% for message in messages %}
                 <div class="alert {{ message.tags }}">{{ message }}</div>
             {% endfor %}
         {% endif %}
         
-        <form action="{% url 'carros' %}" method="POST">
+        <form action="{% url 'carros:carros' %}" method="POST">
             {% csrf_token %}
             <div class="row">
                 <div class="col-md-6">
@@ -25,26 +24,35 @@
 
         <hr style="background-color: gray;">
 
-        <div class="row">
-            <div class="col-sm-2">
-                <table class="table table-dark">
-                    <thead>
-                        <tr>
-                            <th scope="col">Carro cadastrados:</th>
-                        </tr>
-                    </thead>
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">Carro cadastrados:</th>
+                </tr>
+            </thead>
+            
+            <div class="row">
+                <div class="col-md-6">
                     <tbody>
-                        {% for carro in carros %}
+                        {% for carro in coluna1 %}
                             <tr>
-                                <th><a href=" {% url 'versoes' carro.slugCarro %}">{{ carro.nome }} </a></th>
+                                <th><a href=" {% url 'carros:versoes' carro.slugCarro %}">{{ carro.nome }} </a></th>
                             </tr>
                         {% endfor %}
                     </tbody>
-                </table>
+                </div>
+                <div class="col-md-6">
+                    <tbody>
+                        {% for carro in coluna2 %}
+                            <tr>
+                                <th><a href=" {% url 'carros:versoes' carro.slugCarro %}">{{ carro.nome }} </a></th>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </div>                        
             </div>
-        </div>
-            
 
+        </table>
     </div>
 
 {% endblock %}
