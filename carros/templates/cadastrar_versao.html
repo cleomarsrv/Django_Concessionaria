@@ -11,48 +11,44 @@
         
         <form action="{% url 'cadastrar_versao' carro.slugCarro %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            <br>
-            <h5>CADASTRO DE NOVA VERSÃO: </h5>
-            <br>
+            <h6>CADASTRO DE NOVA VERSÃO: </h6>
+            
             <div class="row">
                 
                 <div class="col-md-5">
-                        {{form.nome.label}}
+                        {{form.nome.label_tag}}
                         {{form.nome}}
-                        <br>
-                        {{form.motor.label}}
+                        
+                        {{form.motor.label_tag}}
                         {{form.motor}}
-                        <br>
-                        {{form.seguranca.label}}
+                        
+                        {{form.seguranca.label_tag}}
                         {{form.seguranca}}
-                        <br>
-                        {{form.ano.label}}
+                        
+                        {{form.ano.label_tag}}
                         {{form.ano}}
-                        <br>
-                        {{form.imagem.label}}
+                        
+                        {{form.imagem.label_tag}}
                         {{form.imagem}}
-                        <br>
-
                 </div>
                 
                 <div class="col-md-5">
-                        {{form.combustivel.label}}
+                        {{form.combustivel.label_tag}}
                         {{form.combustivel}}
-                        <br>
-                        {{form.direcao.label}}
-                        {{form.direcao}}
-                        <br>
-                        {{form.acessorio.label}}
-                        {{form.acessorio}}
-                        <br>
-                        {{form.modelo.label}}
-                        {{form.modelo}}
-                        <br><br>
-                        {{form.carro}}
                         
+                        {{form.direcao.label_tag}}
+                        {{form.direcao}}
+                        
+                        {{form.acessorio.label_tag}}
+                        {{form.acessorio}}
+                        
+                        {{form.modelo.label_tag}}
+                        {{form.modelo}}
+                        
+                        <input class="btn btn-success" type="submit" value="Cadastrar Versão" style="margin-top: 31px;" >
                 </div>
             </div>
-            <input class="btn btn-success" type="submit" value="Cadastrar Versão" >
+            
         </form>
 
     </div>

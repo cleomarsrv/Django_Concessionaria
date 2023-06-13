@@ -1,6 +1,11 @@
 from django.db import models
 
 class Fornecedor(models.Model):
+
+
+    class Meta:
+        verbose_name_plural = 'Fornecedores'
+
     nome = models.CharField(max_length=30)
     cnpj = models.CharField(max_length=14)
     email = models.EmailField()

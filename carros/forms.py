@@ -11,4 +11,5 @@ class FormVersao(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in self.fields:
             self.fields[field].widget.attrs.update({'class': 'form-control'})
+            self.fields[field].widget.attrs.update({'style': 'margin-bottom:17px;'})
             self.fields[field].widget.attrs.update({'placeholder':field})

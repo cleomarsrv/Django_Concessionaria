@@ -60,7 +60,7 @@ def cadastrar_versao(request, slugCarro):
         }
         return render(request, 'cadastrar_versao.html', context=context)
     elif request.method == "POST":
-        form = FormVersao(request.POST)
+        form = FormVersao(request.POST, request.FILES)
 
     if form.is_valid():
         form.save()

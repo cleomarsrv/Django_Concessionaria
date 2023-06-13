@@ -2,6 +2,10 @@ from django.db import models
 from pessoas.models import Pessoa
 
 class Colaborador(Pessoa):
+
+    class Meta:
+        verbose_name_plural = 'Colaboradores'
+
     ctps = models.IntegerField()
     pis = models.IntegerField()
     nomePai = models.CharField(max_length=50)
@@ -13,25 +17,3 @@ class Colaborador(Pessoa):
     dataAdmissao = models.DateField()
     dataDesligamento = models.DateField(null=True)
     situacaoVinculo = models.CharField(max_length=20)
-
-'''
-nomeCompleto
-email
-dataNascimento
-telefone
-cpf
-endereco
-estadoCivil
----
-ctps
-pis
-nomePai
-nomeMae
-tipoVinculo
-cargoAtual
-funcaoAtual
-salarioAtual
-dataAdmissao
-dataDesligamento
-situacaoVinculo
-'''

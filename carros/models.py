@@ -14,6 +14,9 @@ class Combustivel(models.Model):
     def __str__(self):
         return self.tipo
     
+    class Meta:
+        verbose_name_plural = 'Combustiveis'
+    
 class Acessorio(models.Model):
     item = models.CharField(max_length=50)
 
@@ -30,12 +33,18 @@ class Motor(models.Model):
 
     def __str__(self):
         return self.nome
+    
+    class Meta:
+        verbose_name_plural = 'Motores'
 
 class Direcao(models.Model):
     tipo = models.CharField(max_length=50)
 
     def __str__(self):
         return self.tipo
+    
+    class Meta:
+        verbose_name_plural = 'Direcoes'
 
 class Carro(models.Model):
     nome = models.CharField(max_length=30, unique=True)
@@ -70,4 +79,7 @@ class Versao(models.Model):
         if not self.slugVersao:
             self.slugVersao = slugify(self.nome)
         return super().save(*args, **kwargs)
+    
+    class Meta:
+        verbose_name_plural = 'Versoes'
     
