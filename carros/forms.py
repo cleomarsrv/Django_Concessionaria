@@ -14,3 +14,4 @@ class FormVersao(forms.ModelForm):
             self.fields[field].widget.attrs.update({'class': 'form-control'})
             self.fields[field].widget.attrs.update({'style': 'margin-bottom:17px;'})
             self.fields[field].widget.attrs.update({'placeholder':field})
+            self.fields['nome'].widget.attrs.update({'placeholder':'nome da nova versao'})

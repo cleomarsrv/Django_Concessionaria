@@ -1,0 +1,58 @@
+.fundo {
+    background-color: #121212;
+    color: white;
+}
+
+.bg-nav{
+    position: fixed;
+    left:0;
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+    background-color: #191919;
+    margin-bottom: 5px;
+    margin-block-end: 10px;
+}
+
+.bg-hr{
+    background-color: gray;
+}
+
+.container{
+    /* margin-left: 20px; */
+    max-width: 1300px;
+}
+
+body {
+    margin-top: 35px;
+    padding-top: 35px;
+    margin-left: 10px;
+}
+
+.add-scroll{
+    overflow: auto;
+    max-height: 450px;
+}
+
+a{
+    color:white;
+}
+
+a:hover{
+    color: gray;
+    text-decoration: underline;
+}
+
+.botao {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.head-listas{
+    background-color: black;
+}

@@ -12,10 +12,10 @@ from django.views import generic
 def carros(request, slugCarro=None):
     if request.method == "GET":
         carros = Carro.objects.all()
-        metade = len(carros) // 2
-        coluna1 = carros[:metade]
-        coluna2 = carros[metade:]
-
+        todasVersoes = Versao.objects.all()
+        todasImagens = ""
+        for todas in todasVersoes:
+            todasImagens += todas.imagem.url + ","
         try:
             carroSelecionado = Carro.objects.get(slugCarro=slugCarro)
             versoes = Versao.objects.filter(carro__id = carroSelecionado.id)
@@ -27,9 +27,9 @@ def carros(request, slugCarro=None):
             return redirect(reverse('carros:versoes', kwargs={'slugVersao':None}))
 
         context = {
-            'coluna1':coluna1,
-            'coluna2':coluna2,
+            'carros':carros,
             'versoes':versoes,
+            'todasImagens':todasImagens,
             'carroSelecionado':carroSelecionado,
         }
         return render(request, 'carros/carros.html', context=context)

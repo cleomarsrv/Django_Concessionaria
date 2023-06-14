@@ -10,12 +10,12 @@
         
         <form action="{% url 'carros:cadastrar_versao' carro.slugCarro %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            <h6>CADASTRO DE NOVA VERSÃO: </h6>
             <div class="row">
                 
                 <div class="col-md-5">
                         {{form.nome.label_tag}}
                         {{form.nome}}
+                        {{form.nome.placeholder}}
                         
                         {{form.motor.label_tag}}
                         {{form.motor}}
