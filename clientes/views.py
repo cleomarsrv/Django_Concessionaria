@@ -1,74 +1,28 @@
+from typing import Any, Dict
+from django.db import models
+from django.forms.models import BaseModelForm
 from django.shortcuts import render, redirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.http import HttpResponse
 from .models import Cliente
+from .forms import ClientModelForm
+from django.contrib import messages
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-def clientes(request):
-    if request.method == "GET":
-        clientes = Cliente.objects.all()
-        return render(request, 'clientes.html', {'clientes':clientes})
-    elif request.method == "POST":
-        
-        '''cliente  = Cliente()
-        cliente.nomeCompleto = request.POST.get('nomeCompleto')
-        cliente.email = request.POST.get('email')
-        cliente.dataNascimento = request.POST.get('dataNascimento')
-        cliente.telefone = request.POST.get('telefone')
-        cliente.cpf = request.POST.get('cpf')
-        cliente.endereco = request.POST.get('endereco')
-        cliente.estadoCivil = request.POST.get('estadoCivil')
-        cliente.renda = request.POST.get('renda')
-        cliente.profissao = request.POST.get('profissao')'''
+class ClienteCreate(CreateView,LoginRequiredMixin):
+    model = Cliente
+    fields = '__all__'
+    template_name = 'clientes/clientes.html'
+    permisson_required = 'permissao_gerente'
+    success_url = reverse_lazy('clientes:clientes')
 
-        nomeCompleto = request.POST.get('nomeCompleto')
-        email = request.POST.get('email')
-        dataNascimento = request.POST.get('dataNascimento')
-        telefone = request.POST.get('telefone')
-        cpf = request.POST.get('cpf')
-        endereco = request.POST.get('endereco')
-        estadoCivil = request.POST.get('estadoCivil')
-        renda = request.POST.get('renda')
-        profissao = request.POST.get('profissao')
+    def get_context_data(self, **kwargs):
+        context = super(ClienteCreate, self).get_context_data(**kwargs)
+        context['clientes'] = Cliente.objects.all()
+        return context
 
-        cliente = Cliente(
-            nomeCompleto = nomeCompleto,
-            email = email,
-            dataNascimento = dataNascimento,
-            telefone = telefone,
-            cpf = cpf,
-            endereco = endereco,
-            estadoCivil = estadoCivil,
-            renda = renda,
-            profissao = profissao
-        )
-        
-        try:
-            cliente.save()
-            return redirect(reverse('clientes'))
-        except:
-            return HttpResponse('erro ao salvar')
-
-def editar_cliente(request, id):
-    cliente = Cliente.objects.get(id=id)
-    return render(request, 'upd_cliente.html', {'cliente':cliente})
-
-
-def upd_cliente(request,id):
-    cliente = Cliente.objects.get(id=id)
- 
-    cliente.nomeCompleto = request.POST.get('nomeCompleto')
-    cliente.email = request.POST.get('email')
-    cliente.dataNascimento = request.POST.get('dataNascimento')
-    cliente.telefone = request.POST.get('telefone')
-    cliente.cpf = request.POST.get('cpf')
-    cliente.endereco = request.POST.get('endereco')
-    cliente.estadoCivil = request.POST.get('estadoCivil')
-    cliente.renda = request.POST.get('renda')
-    cliente.profissao = request.POST.get('profissao')
-
-    try:
-        cliente.save()
-        return redirect(reverse('clientes'))
-    except:
-        return HttpResponse('erro ao atualizar cliente')
-    
+    def form_valid(self, form):
+        messages.success(self.request, 'cliente cadastrado com sucesso.')
+        return super().form_valid(form)

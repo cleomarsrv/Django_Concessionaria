@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from fornecedores.models import Fornecedor
-from carros.forms import FormVersao
+from carros.forms import VersaoModelForm
 from django.views import generic
 
 
@@ -59,14 +59,14 @@ def versoes(request, slugCarro):
 def cadastrar_versao(request, slugCarro):
     carro = Carro.objects.get(slugCarro=slugCarro)
     if request.method == "GET":
-        form = FormVersao()
+        form = VersaoModelForm()
         context = {
             'carro':carro,
             'form':form
         }
         return render(request, 'carros/cadastrar_versao.html', context=context)
     elif request.method == "POST":
-        form = FormVersao(request.POST, request.FILES)
+        form = VersaoModelForm(request.POST, request.FILES)
 
     if form.is_valid():
         form.save()
