@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'body' %}
+    <form action="{% url 'clientes:editar' cliente.id %}" method="POST">{% csrf_token %}
+        <div class="colunas_tres">
+            {{form}}
+        </div>
+        <input type="submit" class="btn btn-success" value="Editar">
+    </form>
+{% endblock 'body' %}
+

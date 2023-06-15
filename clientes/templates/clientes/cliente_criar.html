@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block 'body' %}
+
+    <div class="container" >
+        <div class="row">
+            <div class="col-md-9">
+                <form action="{% url 'clientes:cadastrar' %}" method="POST">{% csrf_token %}
+                    <div class="colunas_tres">
+                        {{form}}
+                    </div>
+                    <input type="submit" class="btn btn-success" value="Cadastrar cliente">
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

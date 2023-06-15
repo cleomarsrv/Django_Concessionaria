@@ -19,7 +19,6 @@
 }
 
 .container{
-    /* margin-left: 20px; */
     max-width: 1300px;
 }
 
@@ -45,14 +44,46 @@ a:hover{
 
 .botao {
     display: inline-block;
-    padding: 10px 15px;
+    padding: 5px 7px;
     background-color: #007bff;
     color: #fff;
     text-decoration: none;
-    border-radius: 5px;
+    border-radius: 8px;
     margin-bottom: 10px;
+    
 }
 
 .head-listas{
     background-color: black;
+}
+
+.colunas_tres{
+    column-count: 3;
+}
+
+.colunas_tres input{
+    width: 80%;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.esmaecido{
+    opacity: 50%;
+    margin-bottom: 0;
+}
+
+.paginacao_pag{
+    font-size: 90%;
+    color: #07c3ed;
+}
+
+.pagination {
+    padding-left: 10px;
+    padding-bottom: 15px;
+
+    display: contents;
+}
+
+.page-links{
+    margin-bottom: 10px;
 }

@@ -1,29 +1,31 @@
 {% extends 'base.html' %}
 
+
+{% block pagination %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <a href=" {% url 'clientes:cadastrar' %}" class="botao">Novo Cliente</a>
+            </div>
+            <div class="col-md-6">{{ block.super }}</div>
+        </div>
+    </div>
+{% endblock %}
+
 {% block 'body' %}
 
     <div class="container" >
         <div class="row">
-            <div class="col-md-9" style="background-color: darkslategray;">
-                <form action="{% url 'clientes:clientes' %}" method="POST">{% csrf_token %}
-                    <H5 style="text-align: center;">CADASTRAR CLIENTE</H5>
-                    {{form.as_table}}  
-                    <input type="submit" class="btn btn-success" value="Salvar">
-                </form>
-            </div>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
         </div>
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert {{ message.tags }}">{{ message }}</div>
-                <script>
-                    alert('{{message}}')
-                </script>
-            {% endfor %}
-        {% endif %}
+   
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md">
                 <table class="table table-dark">
-                    <H5 style="text-align: center;">CLIENTES CADASTRADOS</H5>
                     <thead>
                         <tr>
                             <th scope="col">CPF</th>
@@ -34,9 +36,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for cliente in clientes %}
+                        {% for cliente in cliente_list %}
                             <tr>
-                                <th><a href="">{{ cliente.cpf }}</a></th>
+                                <th><a href="{% url 'clientes:editar' cliente.id %}">{{ cliente.cpf }}</a></th>
                                 <td>{{cliente.nomeCompleto}}</td>
                                 <td>{{cliente.email}}</td>
                                 <td>{{cliente.dataNascimento}}</td>

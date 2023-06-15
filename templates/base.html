@@ -32,7 +32,7 @@
             <a class="nav-link" href=" {% url 'vendas:vendas' %}">Vendas <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'clientes:clientes' %}">Clientes</span></a>
+            <a class="nav-link" href="{% url 'clientes:listar' %}">Clientes</span></a>
           </li>          
           <li class="nav-item">
             <a class="nav-link" href="{% url 'colaboradores:colaboradores' %}">Colaboradores</a>
@@ -41,6 +41,29 @@
       </div>
     </nav>
    
+    {% block pagination %}
+      {% if is_paginated %}
+          <div class="pagination">
+              <span class="page-links">
+                  <a href="{{ request.path }}?page={{ page_obj.first }}">Primeira |</a>
+                  {% if page_obj.has_previous %}
+                    <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Voltar</a>
+                  {% else %}
+                    <label class="esmaecido">Voltar</label>
+                  {% endif %}
+                  <span class="page-current paginacao_pag">
+                      | Pag {{ page_obj.number }} de {{ page_obj.paginator.num_pages }} | 
+                  </span>
+                  {% if page_obj.has_next %}
+                      <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">Proxima</a>
+                      {% else %}
+                      <label class="esmaecido">Proxima</label>                      
+                  {% endif %}
+                  <a href="{{ request.path }}?page={{ page_obj.paginator.num_pages }}">| Ultima</a>
+              </span>
+          </div>
+      {% endif %}
+    {% endblock %}
     {% block 'body' %}
     {% endblock %}
 

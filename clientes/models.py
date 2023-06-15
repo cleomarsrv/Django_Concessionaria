@@ -7,7 +7,11 @@ class Cliente(Pessoa):
     profissao = models.CharField(max_length=20, verbose_name='profissao')
 
     class Meta:
-        permissions = (('permissao_gerente', 'permissao gerente'),('permissao_vendedor', 'permissao vendendor'),)
+        permissions = (
+            ('permissao_gerente', 'permissao gerente'),
+            ('permissao_vendedor', 'permissao vendendor'),
+            ('permissao_funcionario', 'permissao todos funcionarios'),
+        )
 
     # def get_absolute_url(self):
     #     return reverse('clientes:clientes')
