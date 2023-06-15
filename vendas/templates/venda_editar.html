@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block 'body' %}
-    <form action="{% url 'upd_colaborador' colaborador.id %}" method="POST">
+    <form action="{% url 'colaboradores:colaborador_editar' colaborador.id %}" method="POST">
         {% csrf_token %}
         <br><br>
         <div class="row">

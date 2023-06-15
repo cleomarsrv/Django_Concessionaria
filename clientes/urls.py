@@ -7,5 +7,6 @@ urlpatterns = [
     path('', views.ClienteListar.as_view(), name='listar'),
     path('cadastrar/', views.ClienteCriar.as_view(), name='cadastrar'),
     path('editar/<int:pk>', views.ClienteEditar.as_view(), name='editar'),
+    path('excluir/<int:pk>', views.ClienteExcluir.as_view(), name='excluir'),
 
 ]

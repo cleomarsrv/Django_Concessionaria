@@ -4,7 +4,7 @@
 
     <div class="container">
 
-        <form action="{% url 'colaboradores' %}" method="POST">
+        <form action="{% url 'colaboradores:colaboradores' %}" method="POST">
             {% csrf_token %}
             <br><br>
             <div class="row">
@@ -141,7 +141,7 @@
                 <tbody>
                     {% for colaborador in colaboradores %}
                         <tr>
-                            <th><a href=" {% url 'editar_colaborador' colaborador.id %}">{{ colaborador.cpf }}</a></th>
+                            <th><a href=" {% url 'colaboradores:editar' colaborador.id %}">{{ colaborador.cpf }}</a></th>
                             <td>{{colaborador.nomeCompleto}}</td>
                             <td>{{colaborador.email}}</td>
                             <td>{{colaborador.dataNascimento}}</td>

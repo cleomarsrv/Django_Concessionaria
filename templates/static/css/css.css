@@ -44,13 +44,12 @@ a:hover{
 
 .botao {
     display: inline-block;
-    padding: 5px 7px;
+    padding: 7px 10px;
     background-color: #007bff;
     color: #fff;
     text-decoration: none;
-    border-radius: 8px;
+    border-radius: 5px;
     margin-bottom: 10px;
-    
 }
 
 .head-listas{
@@ -74,16 +73,22 @@ a:hover{
 
 .paginacao_pag{
     font-size: 90%;
-    color: #07c3ed;
+    color: rgb(134, 196, 217);
 }
 
 .pagination {
     padding-left: 10px;
     padding-bottom: 15px;
-
     display: contents;
 }
 
 .page-links{
     margin-bottom: 10px;
+}
+
+.cor_padrao{
+    color: #007bff;
+}
+
+.card-img-top{
 }

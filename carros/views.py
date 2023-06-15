@@ -9,41 +9,32 @@ from carros.forms import VersaoModelForm
 from django.views import generic
 
 
-def carros(request, slugCarro=None):
+def carros(request):
     if request.method == "GET":
         carros = Carro.objects.all()
         todasVersoes = Versao.objects.all()
         todasImagens = ""
         for todas in todasVersoes:
             todasImagens += todas.imagem.url + ","
-        try:
-            carroSelecionado = Carro.objects.get(slugCarro=slugCarro)
-            versoes = Versao.objects.filter(carro__id = carroSelecionado.id)
-        except:
-            carroSelecionado = None
-            versoes = None
         
-        if versoes:
-            return redirect(reverse('carros:versoes', kwargs={'slugVersao':None}))
-
         context = {
             'carros':carros,
-            'versoes':versoes,
             'todasImagens':todasImagens,
-            'carroSelecionado':carroSelecionado,
         }
         return render(request, 'carros/carros.html', context=context)
+
+def carroCriar(request):
+    if request.method == "GET":
+        return render(request, 'carros/carros_criar.html')
     elif request.method == "POST":
-        nome = request.POST.get('nome')
-        carro = Carro(
-            nome = nome,
-        )
+        nome = request.POST.get("nome")
+        carro = Carro ( nome= nome,)
         carro.save()
         messages.add_message(request, constants.SUCCESS, f'carro {nome} cadastrado com sucesso')
         messages.add_message(request, constants.INFO, 'cadastre agora uma versão:')
         slugCarro = carro.slugCarro
         return redirect(reverse('carros:cadastrar_versao', kwargs={'slugCarro':slugCarro}))
-
+        
 def versoes(request, slugCarro):
     carroSelecionado = Carro.objects.get(slugCarro=slugCarro)
     versoes = Versao.objects.filter(carro__id=carroSelecionado.id)

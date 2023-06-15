@@ -3,7 +3,8 @@ from . import views
 
 app_name='carros'
 urlpatterns = [
-    path('', views.carros, name='carros'),
+    path('', views.carros, name='listar'),
+    path('cadastrar/', views.carroCriar, name='cadastrar'),
     path('<slug:slugCarro>/cadastrar_versao',views.cadastrar_versao, name='cadastrar_versao'),
     path('<slug:slugCarro>', views.versoes, name='versoes'),
 

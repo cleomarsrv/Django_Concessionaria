@@ -26,7 +26,7 @@ class ClienteCriar(CreateView,LoginRequiredMixin):
         return form
 
     def form_valid(self, form):
-        messages.success(self.request, 'cliente cadastrado com sucesso.')
+        messages.success(self.request, f'cliente {self.request.POST.get("nomeCompleto")} cadastrado com sucesso.')
         return super().form_valid(form)
 
 class ClienteEditar(UpdateView, LoginRequiredMixin):
@@ -48,7 +48,16 @@ class ClienteEditar(UpdateView, LoginRequiredMixin):
 
 class ClienteListar(generic.ListView, LoginRequiredMixin):
     model = Cliente
-    paginate_by = 7
+    paginate_by = 8
     template_name = 'clientes/clientes.html'
     permission_required = 'clientes.permissao_funcionario'
 
+class ClienteExcluir(generic.DeleteView, LoginRequiredMixin):
+    model  = Cliente
+    template_name = 'clientes/cliente_excluir.html'
+    permission_required = 'clientes.permissao_gerente'
+    success_url = reverse_lazy('clientes:listar')
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Cliente excluido com sucesso.')
+        return super().form_valid(form)

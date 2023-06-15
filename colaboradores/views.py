@@ -36,7 +36,7 @@ def colaboradores(request):
             return HttpResponse('erro ao salvar')
 
 
-def editar_colaborador(request,id):
+def editar(request,id):
     colaborador = Colaborador.objects.get(id=id)
     return render(request, 'upd_colaborador.html', {'colaborador':colaborador})
 

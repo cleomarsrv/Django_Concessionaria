@@ -10,7 +10,7 @@
             {% endfor %}
         {% endif %}
 
-        <form action="{% url 'compras' %}" method="POST">
+        <form action="{% url 'compras:compras' %}" method="POST">
             {% csrf_token %}
             <br><br>
             <div class="row">

@@ -41,5 +41,5 @@ def vendas(request):
             messages.add_message(request, messages.ERROR, f' Nao há estoque do carro {carro.nomeCarro}')
             return redirect(reverse('vendas'))
 
-def editar_venda(request, id):
+def editar(request, id):
     return HttpResponse('editando venda')

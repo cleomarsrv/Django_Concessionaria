@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block 'body' %}
+
+    <div class="container" >
+        <div class="row">
+            <div class="col-md-3">
+                <form action="{% url 'carros:cadastrar' %}" method="POST">{% csrf_token %}
+                    <input type="text" class="form-control" name="nome" placeholder="Nome do novo carro" style="margin-bottom: 10px;">
+                    <input type="submit" class="btn btn-success" value="Cadastrar carro">
+                    <a href="{% url 'carros:listar' %}" class="btn btn-danger">Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

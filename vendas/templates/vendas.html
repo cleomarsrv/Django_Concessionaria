@@ -16,7 +16,7 @@
             {% endfor %}
         {% endif %}
 
-        <form action="{% url 'vendas' %}" method="POST">
+        <form action="{% url 'vendas:vendas' %}" method="POST">
             {% csrf_token %}
             <br><br>
             <div class="row">
@@ -99,7 +99,7 @@
                 <tbody>
                     {% for venda in vendas %}
                         <tr>
-                            <th><a href=" {% url 'editar_venda' venda.id %}">{{ venda.dataHora }}</a></th>
+                            <th><a href=" {% url 'vendas:editar' venda.id %}">{{ venda.dataHora }}</a></th>
                             <td>{{venda.dataHora}}</td>
                             <td>{{venda.detalhes}}</td>
                             <td>{{venda.cliente}}</td>
