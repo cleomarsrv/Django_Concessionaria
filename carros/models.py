@@ -58,6 +58,13 @@ class Carro(models.Model):
             self.slugCarro = slugify(self.nome)
         return super().save(*args, **kwargs)
     
+    class Meta:
+        permissions = (
+            ('permissao_gerente', 'permissao gerente'),
+            ('permissao_vendedor', 'permissao vendendor'),
+            ('permissao_funcionario', 'permissao todos funcionarios'),
+        )
+    
 class Versao(models.Model):
     carro = models.ForeignKey(Carro, on_delete=models.DO_NOTHING)
     nome = models.CharField(max_length=50, unique=True)
@@ -71,6 +78,13 @@ class Versao(models.Model):
     modelo = models.IntegerField(default='2023')
     estoque = models.IntegerField(default=0) 
     slugVersao = models.SlugField(unique=True, null=True, blank=True)
+
+    class Meta:
+        permissions = (
+            ('permissao_gerente', 'permissao gerente'),
+            ('permissao_vendedor', 'permissao vendendor'),
+            ('permissao_funcionario', 'permissao todos funcionarios'),
+        )
 
     def __str__(self):
         return self.nome
