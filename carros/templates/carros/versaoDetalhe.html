@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 
 {% block 'body' %}
+    {{ block.super }}
     <div class="container">
+        <a href="{%url 'carros:versaoEditar' versao.carro.slugCarro versao.pk %} " class="btn btn-primary botao">Editar</a>
+        <a href="{%url 'carros:versaoExcluir' versao.carro.slugCarro versao.pk %} " class="btn btn-danger botao">Excluir</a>
+        
         <div class="row">
             <div class="col-md-4">
                 <h3>Versão: {{versao}}</h3>

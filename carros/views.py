@@ -36,7 +36,7 @@ def carroCriar(request):
         slugCarro = carro.slugCarro
         return redirect(reverse('carros:versaoCriar', kwargs={'slugCarro':slugCarro}))
         
-class carroEditar(UpdateView, LoginRequiredMixin):
+class CarroEditar(UpdateView, LoginRequiredMixin):
     model = Carro
     fields = ['nome']
     template_name = 'carros/carroEditar.html'
@@ -50,8 +50,7 @@ class carroEditar(UpdateView, LoginRequiredMixin):
         obj = queryset.get(**{slug_field: slug})
         return obj
 
-    
-class carroExcluir(DeleteView, LoginRequiredMixin):
+class CarroExcluir(DeleteView, LoginRequiredMixin):
     model = Carro
     template_name = 'carros/carroExcluir.html'
     permission_required = 'carros.permissao_gerente'
@@ -64,6 +63,13 @@ class carroExcluir(DeleteView, LoginRequiredMixin):
         obj = queryset.get(**{slug_field: slug})
         return obj
 
+    def form_valid(self, form):
+            self.object = self.get_object()
+            if Versao.objects.filter(carro=self.object).exists():
+                messages.error(self.request,'este carro já tem versão cadastrada!' )
+                return redirect(reverse('carros:versoes', kwargs={'slugCarro':self.object.slugCarro}))
+            messages.success(self.request, f'carro {self.object.nome} excluido com sucesso')
+            return super().form_valid(form)
 
 def versoes(request, slugCarro):
     carroSelecionado = Carro.objects.get(slugCarro=slugCarro)
@@ -73,9 +79,10 @@ def versoes(request, slugCarro):
         'versoes':versoes,
         'carroSelecionado':carroSelecionado,
     }
-    return render(request, 'carros/carrosVersoes.html', context=context)
+    return render(request, 'carros/carroVersoes.html', context=context)
+    return HttpResponse('teste')
 
-class versaoDetalheView(generic.DetailView):
+class VersaoDetalheView(generic.DetailView):
     model = Versao
     template_name='carros/versaoDetalhe.html'
 
@@ -104,3 +111,39 @@ def versaoCriar(request, slugCarro):
 
     slugCarro = carro.slugCarro
     return redirect(reverse('carros:versoes', kwargs={'slugCarro':slugCarro}))
+
+class VersaoEditar(UpdateView):
+    model = Versao
+    fields = ['nome','motor','combustivel','direcao','seguranca','acessorio','imagem','ano','modelo']
+    template_name = 'carros/versaoEditar.html'
+    # success_url = reverse_lazy('carros:listar')
+
+    def get_success_url(self):
+        versao_id = self.kwargs['pk']
+        versao = Versao.objects.get(id=versao_id)
+        carro = versao.carro
+        slugCarro = carro.slugCarro
+        return reverse_lazy ('carros:versaoDetalhe', kwargs={'slugCarro':slugCarro, 'pk':versao_id})
+    
+    def form_valid(self,form):
+        messages.success(self.request, 'versao alterada com sucesso')
+        return super().form_valid(form)
+       
+    # def get_object(self, queryset=None):
+    #     versao_id = self.kwargs['pk']
+    #     versao = Versao.objects.get(id=versao_id)
+    #     carro = versao.carro
+    #     # print(carro.slugCarro, versao)
+    #     return carro
+
+    # def gex_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     carro = self.object.carro
+    #     context['slugCarro'] = carro.slugCarro
+    #     print(context, carro)
+    #     return context
+    
+class VersaoExcluir(DeleteView):
+    model = Versao
+    template_name = 'carros/versaoExcluir.html'
+    success_url = reverse_lazy('carros:versoes', kwargs={'slugCarro':'teste'})

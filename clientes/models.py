@@ -9,9 +9,11 @@ class Cliente(Pessoa):
     class Meta:
         permissions = (
             ('permissao_gerente', 'permissao gerente'),
+            ('permissao_supervisor', 'permissao supervisor'),
             ('permissao_vendedor', 'permissao vendendor'),
             ('permissao_funcionario', 'permissao todos funcionarios'),
         )
+    
 
     # def get_absolute_url(self):
     #     return reverse('clientes:clientes')

@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block 'body' %}
+    <h3>Confirma a exclusão da versão {{object}}?</h3>
+    <form action="" method="POST"> {% csrf_token %}
+        <input type="submit" class="btn btn-danger botao" value="Excluir">
+        <a href="javascript:history.back()" class="btn btn-secondary botao">Voltar</a>
+    </form>
+{% endblock %}
