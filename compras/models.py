@@ -4,7 +4,7 @@ from fornecedores.models import Fornecedor
 
 class Compra(models.Model):
     dataHora = models.DateTimeField()
-    versao = models.ForeignKey(Versao, on_delete=models.SET_NULL, null=True)
+    versao = models.ForeignKey(Versao, on_delete=models.DO_NOTHING)
     quantidade = models.IntegerField()
     valorTotal = models.FloatField()
 

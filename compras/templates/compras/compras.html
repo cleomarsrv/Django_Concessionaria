@@ -1,93 +1,56 @@
 {% extends 'base.html' %}
 
-{% block 'body' %}
-
+{% block pagination %}
     <div class="container">
-
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert {{message.tags}}">{{message}}</div>
-            {% endfor %}
-        {% endif %}
-
-        <form action="{% url 'compras:compras' %}" method="POST">
-            {% csrf_token %}
-            <br><br>
-            <div class="row">
-                <div class="col-md-3">
-                    <label>Data e Hora da Compra: </label>
-                    <input class="form-control" type="datetime-local" name="dataHora">
-                </div>
-                    
-                <div class="col-md-3">
-                    <label>Carro</label>
-                    <select name="carro" class="form-control">
-                        {% for carro in carros %}
-                            <option value="{{carro.id}}">{{carro.nome}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <div class="col-md-3">
-                    <label>Versão</label>
-                    <select name="versao" class="form-control">
-                        {% for versao in versoes %}
-                            <option value="{{versao.id}}">{{versao.nome}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
+        <div class="row">
+            <div class="col-md-3">
+                <a href="{% url 'compras:criar' %}" class=" btn btn-primary botao">Nova compra</a>
             </div>
-            
-            <div class="row">
-
-                <div class="col-md-3">
-                    <label>Quantidade Carros: </label>
-                    <input class="form-control" type="number" name="quantidade">
-                </div>
-
-                <div class="col-md-3">
-                    <label>Valor Total da Compra: </label>
-                    <input class="form-control" type="text" name="valorTotal">
-                </div>
-                
-
-                <div class="col-md-3" style="align-self:self-end;">
-                    <input class="btn btn-success" type="submit" value="Lançar Compra" >
-                </div>
-
+            <div class="col-md-5.5">
+                {{ block.super }}
             </div>
-            <br>
-        </form>
+        </div>
+    </div>
+{% endblock %}
 
-        <hr style="background-color: gray;">
-
-        <div class="container">
-            <table class="table table-dark">
-                <label> <H5>COMPRAS REALIZADAS</H5> </label>
-                <thead>
-                    <tr>
-                        <th scope="col">Data e hora</th>
-                        <th scope="col">Carro</th>
-                        <th scope="col">Versão</th>
-                        <th scope="col">Quantidade</th>
-                        <th scope="col">Valor Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for compra in compras %}
+{% block 'body' %}
+    {{ block.super }}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7">
+                <table class="table table-dark">
+                    <thead>
                         <tr>
-                            <td>{{compra.dataHora}}</td>
-                            <td>{{compra.versao}}</td>
-                            <td>{{compra.versao}}</td>
-                            <td>{{compra.quantidade}}</td>
-                            <td>{{compra.valorTotal}}</td>
+                            <th scope="col">Opcoes</th>
+                            <th scope="col">Data e hora</th>
+                            <th scope="col">Carro</th>
+                            <th scope="col">Versão</th>
+                            <th scope="col">Quant.</th>
+                            <th scope="col">Valor Total</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-                
-            </table>
-            
+                    </thead>
+                    <tbody>
+                        {% for compra in compra_list %}
+                            <tr>
+                                <td>
+                                    <a href="{% url 'compras:editar' compra.pk %}" class="btn btn-primary botao">editar</a>
+                                    <a href="{% url 'compras:excluir' compra.pk %}" class="btn btn-danger botao">excluir</a>
+                                </td>
+                                <td>{{compra.dataHora|date:"d/m/Y H:i"}}</td>
+                                <td>{{compra.versao.carro}}</td>
+                                <td>{{compra.versao}}</td>
+                                <td>{{compra.quantidade}}</td>
+                                <td>{{compra.valorTotal}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    
+                </table>
+            </div>
+            <div class="col-md-1">
+                <h4>Estoque atualizados: DATETIME</h4>
+                <h5>Todos carros/versoes</h5>
+            </div>
         </div>
     </div>
 
