@@ -128,21 +128,7 @@ class VersaoEditar(UpdateView):
     def form_valid(self,form):
         messages.success(self.request, 'versao alterada com sucesso')
         return super().form_valid(form)
-       
-    # def get_object(self, queryset=None):
-    #     versao_id = self.kwargs['pk']
-    #     versao = Versao.objects.get(id=versao_id)
-    #     carro = versao.carro
-    #     # print(carro.slugCarro, versao)
-    #     return carro
 
-    # def gex_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     carro = self.object.carro
-    #     context['slugCarro'] = carro.slugCarro
-    #     print(context, carro)
-    #     return context
-    
 class VersaoExcluir(DeleteView):
     model = Versao
     template_name = 'carros/versaoExcluir.html'

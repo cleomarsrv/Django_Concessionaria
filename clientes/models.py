@@ -14,7 +14,6 @@ class Cliente(Pessoa):
             ('permissao_funcionario', 'permissao todos funcionarios'),
         )
     
-
     # def get_absolute_url(self):
     #     return reverse('clientes:clientes')
     

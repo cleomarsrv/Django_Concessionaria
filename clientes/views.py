@@ -14,11 +14,6 @@ class ClienteCriar(CreateView,LoginRequiredMixin):
     permisson_required = 'clientes.permissao_funcionario'
     success_url = reverse_lazy('clientes:listar')
 
-    # def get_context_data(self, **kwargs):
-    #     context = super(ClienteCriar, self).get_context_data(**kwargs)
-    #     context['clientes'] = Cliente.objects.all()
-    #     return context
-
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
         for field in form.fields:
