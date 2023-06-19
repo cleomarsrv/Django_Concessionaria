@@ -1,120 +1,61 @@
 {% extends 'base.html' %}
 
-{% block 'body' %}
-
+{% block pagination %}
     <div class="container">
-
-        {% if messages %}
-            <br>
-            {% for message in messages %}
-                <div class="alert {{message.tags}}">{{message}}</div>
-                
-                <script>
-                    alert('{{ message }}');
-                </script>
-
-            {% endfor %}
-        {% endif %}
-
-        <form action="{% url 'vendas:vendas' %}" method="POST">
-            {% csrf_token %}
-            <br><br>
-            <div class="row">
-                <div class="col-md">
-                    <label>Data e Hora da Venda: </label>
-                    <input class="form-control" type="datetime-local" name="dataHora">
-                </div>
-
-                <div class="col-md">
-                    <label>Detalhes: </label>
-                    <input class="form-control" type="text" name="detalhes">
-                </div>
-                    
-                <div class="col-md">
-                    <label>Cliente: </label>
-                    <select name="cliente" class="form-control">
-                        {% for cliente in clientes %}
-                            <option value="{{cliente.id}}">{{cliente.nomeCompleto}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <div class="col-md">
-                    <label>colaborador</label>
-                    <select name="colaborador" class="form-control">
-                        {%for colaborador in colaboradores %}
-                            <option value="{{colaborador.id}}">{{colaborador.nomeCompleto}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                
-                <div class="col-md">
-                    <label>Carro</label>
-                    <select name="carro_id" class="form-control">
-                        {% for carro in carros %}
-                            <option value="{{carro.id}}">{{carro.nomeCarro}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
+        <div class="row">
+            <div class="col-md-3">
+                <a href="{% url 'vendas:criar' %}" class=" btn btn-primary botao">Nova venda</a>
             </div>
-            
-            <div class="row">
-                <div class="col-md">
-                    <label>Valor Venda: </label>
-                    <input class="form-control" type="text" name="valorVenda">
-                </div>
-
-                <div class="col-md">
-                    <label>Forma Pagamento</label>
-                    <input class="form-control" type="text" name="formaPagamento">
-                </div>
+            <div class="col-md-5.5">
+                {{ block.super }}
             </div>
-            <br>
-            <div class="row">
-                
-                <div class="col-md">
-                    <input class="btn btn-success" type="submit" value="Efetivar Venda" >
-                </div>
-                
-            </div>
-        </form>
-
-        <hr style="background-color: gray;">
-
-        <div class="container">
-            <table class="table table-dark">
-                <label> <H5>Vendas realizadas por COLABORADOR TAL</H5> </label>
-                <thead>
-                    <tr>
-                        <th scope="col">data e hora da venda</th>
-                        <th scope="col">Detalhes</th>
-                        <th scope="col">Cliente</th>
-                        <th scope="col">Vendedor</th>
-                        <th scope="col">Carro</th>
-                        <th scope="col">Valor da Venda</th>
-                        <th scope="col">Forma de Pagamento</th>                        
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for venda in vendas %}
-                        <tr>
-                            <th><a href=" {% url 'vendas:editar' venda.id %}">{{ venda.dataHora }}</a></th>
-                            <td>{{venda.dataHora}}</td>
-                            <td>{{venda.detalhes}}</td>
-                            <td>{{venda.cliente}}</td>
-                            <td>{{venda.colaborador}}</td>
-                            <td>{{venda.carro}}</td>
-                            <td>{{venda.valorVenda}}</td>
-                            <td>{{venda.formaPagamento}}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-                
-            </table>
-            
         </div>
+    </div>
+{% endblock %}
 
+{% block 'body' %}
+    {{ block.super }}
+    <div class="container">
+        <div class="row">
+            <div class="col-md">
+                <table class="table table-dark">
+                    <thead>
+                        <tr>
+                            <th scope="col">Opcoes</th>
+                            <th scope="col">Data e hora</th>
+                            <th scope="col">Detalhes</th>
+                            <th scope="col">valor venda</th>
+                            <th scope="col">forma Pag.</th>
+                            <th scope="col">Cliente</th>
+                            <th scope="col">Colaborador</th>
+                            <th scope="col">Carro</th>
+                            <th scope="col">Versao</th>
+                            <th scope="col">Situacao</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for venda in venda_list %}
+                            <tr>
+                                <td>
+                                    <a href="{% url 'vendas:editar' venda.pk %}" class="btn btn-primary botao">editar</a>
+                                    <a href="{% url 'vendas:excluir' venda.pk %}" class="btn btn-danger botao">excluir</a>
+                                </td>
+                                <td>{{venda.dataHora|date:"d/m/Y H:i"}}</td>
+                                <td>{{venda.detalhes}}</td>
+                                <td>{{venda.valorVenda}}</td>
+                                <td>{{venda.formaPagamento}}</td>
+                                <td>{{venda.cliente}}</td>
+                                <td>{{venda.colaborador}}</td>
+                                <td>{{venda.versao.carro}}</td>
+                                <td>{{venda.versao}}</td>
+                                <td>{{venda.situacao}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    
+                </table>
+            </div>
+        </div>
     </div>
 
 {% endblock %}

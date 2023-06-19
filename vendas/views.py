@@ -1,45 +1,78 @@
 from django.shortcuts import render, redirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.http import HttpResponse
 from .models import Venda
 from carros.models import Carro
 from clientes.models import Cliente
 from colaboradores.models import Colaborador
 from django.contrib import messages
+from django.views.generic import ListView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from .forms import VendasModelForm
 
-def vendas(request):
-    if request.method == "GET":
-        vendas =  Venda.objects.all()
-        clientes = Cliente.objects.all()
-        carros = Carro.objects.all()
-        colaboradores = Colaborador.objects.all()
-        return render(request, 'vendas.html', {'vendas':vendas,'clientes':clientes,'carros':carros, 'colaboradores':colaboradores})
-    elif request.method == "POST":
-        carro_id = request.POST.get('carro_id')
-        carro = Carro.objects.get(id=carro_id)
-        if carro.estoque > 0:
-            venda = Venda()
-            venda.dataHora = request.POST.get('dataHora')
-            venda.detalhes = request.POST.get('detalhes')
-            venda.cliente_id = request.POST.get('cliente')
-            venda.carro_id = carro_id
-            venda.colaborador_id = request.POST.get('colaborador')
-            venda.valorVenda = request.POST.get('valorVenda')
-            venda.formaPagamento = request.POST.get('formaPagamento')
-            venda.situacao = 'P'
-            carro.estoque -= 1
-            try:
-                venda.save()
-                carro.save()
-                messages.add_message(request, messages.SUCCESS, 'venda efetuada com sucesso!')
-                return redirect(reverse('vendas'))
-            except:
-                messages.add_message(request, messages.ERROR, 'erro ao efetivar a venda' )
-                return redirect(reverse('vendas'))
-            
+class VendasListar(ListView):
+    model = Venda
+    template_name = 'vendas/vendas.html'
+    paginate_by = 10
+
+class VendasCriar(CreateView):
+    model = Venda
+    form_class = VendasModelForm
+    template_name = 'vendas/vendaForm.html'
+    success_url = reverse_lazy('vendas:listar')
+
+    def form_valid(self, form):
+
+        versao = form.cleaned_data['versao']
+        print(versao.nome, versao.carro.nome)
+        if versao.estoque <= 0:
+            messages.error(self.request, f'Não há estoque para vender. Versao: {versao.nome} do Carro: {versao.carro.nome}).')
+            return redirect(reverse('vendas:listar'))
         else:
-            messages.add_message(request, messages.ERROR, f' Nao há estoque do carro {carro.nomeCarro}')
-            return redirect(reverse('vendas'))
+            messages.success(self.request, 'venda realizada com sucesso. ')
+            object_ = self.get_object()
+            object_.estoque -= 1
+            object_.save()
+            return super().form_valid(form)
+    
+class VendasEditar(UpdateView):
+    model = Venda
+    form_class = VendasModelForm
+    template_name = 'vendas/vendaForm.html'
+    success_url = reverse_lazy('vendas:listar')
 
-def editar(request, id):
-    return HttpResponse('editando venda')
+    def form_valid(self, form):
+        versaoAposEditar = form.cleaned_data['versao']
+        versaoAntesEditar = self.versaoAntesEditar
+        if versaoAposEditar.estoque <=0:
+            messages.error(self.request, f'Não há estoque da Versao: {versaoAposEditar.nome} do Carro: {versaoAposEditar.carro.nome}).')
+            form.add_error('versao', 'esta versão nao tem estoque!')
+            return self.form_invalid(form)
+        elif (versaoAposEditar != versaoAntesEditar):
+            versaoAntesEditar.estoque += 1
+            versaoAposEditar.estoque -= 1
+            versaoAposEditar = form.save(commit=False)
+            versaoAposEditar.save()
+            versaoAntesEditar.save()
+            messages.success(self.request, 'venda editada com sucesso. ')
+        return super().form_valid(form)
+    
+    def get_initial(self):
+        initial = super().get_initial()
+        object_ = self.get_object()
+        initial['dataHora'] = object_.dataHora.strftime('%Y-%m-%dT%H:%M')
+        self.versaoAntesEditar = object_.versao
+        return initial
+
+class VendasExcluir(DeleteView):
+    model = Venda
+    template_name = 'vendas/vendaExcluir.html'
+    success_url = reverse_lazy('vendas:listar')
+
+    def form_valid(self, form):
+        messages.success(self.request, 'venda excluida com sucesso. ')
+        object_ = self.get_object()
+        versao = object_.versao
+        versao.estoque += 1
+        versao.save()
+        return super().form_valid(form)

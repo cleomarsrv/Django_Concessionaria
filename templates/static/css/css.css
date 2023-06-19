@@ -53,6 +53,16 @@ a:hover{
     background-color: black;
 }
 
+.colunas_duas{
+    column-count: 2;
+}
+
+.colunas_duas input{
+    width: 80%;
+    display: block;
+    margin-bottom: 10px;
+}
+
 .colunas_tres{
     column-count: 3;
 }

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block 'body' %}
+    <h3>Confirma a exclusão desta venda?</h3>
+    <ul>
+        <li>{{object.dataHora|date:"d/m/Y H:i"}}</li>
+        <li>Carro: {{object.versao.carro}}</li>
+        <li>Versao: {{object.versao}}</li>
+        <li>cliente: {{object.cliente}}</li>
+        <li>Valor venda: {{object.valorvenda}}</li>
+    </ul>
+    <form action="" method="POST"> {% csrf_token %}
+        <input type="submit" class="btn btn-danger" value="Excluir">
+        <a href="javascript:history.back()" class="btn btn-secondary">Voltar</a>
+    </form>
+{% endblock %}
