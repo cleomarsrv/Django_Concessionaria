@@ -19,6 +19,11 @@ class CompraCriar(CreateView, LoginRequiredMixin):
 
     def form_valid(self, form):
         messages.success(self.request, 'compra lancada com sucesso. ')
+        versaoCompra = form.cleaned_data.get('versao')
+        quantidade = form.cleaned_data.get('quantidade')
+        versao = Versao.objects.get(id=versaoCompra.id)
+        versao.estoque += quantidade
+        versao.save()
         return super().form_valid(form)
 
 class CompraEditar(UpdateView):
@@ -29,8 +34,29 @@ class CompraEditar(UpdateView):
 
     def form_valid(self, form):
         messages.success(self.request, 'compra alterada com sucesso.')
+        quantidadeAposEditar = form.cleaned_data['quantidade']
+        versaoAposEditar = form.cleaned_data['versao']
+        quantidadeAntesEditar = self.quantidadeAntesEditar
+        versaoAntesEditar = self.versaoAntesEditar
+
+        if versaoAntesEditar == versaoAposEditar:
+            versaoAntesEditar.estoque += quantidadeAposEditar - quantidadeAntesEditar
+            versaoAntesEditar.save()
+        else:
+            versaoAntesEditar.estoque -= quantidadeAntesEditar
+            versaoAposEditar.estoque += quantidadeAposEditar
+            versaoAposEditar.save()
+            versaoAntesEditar.save()
+        
         return super().form_valid(form)
 
+    def get_initial(self):
+        initial = super().get_initial()
+        objeto = self.get_object()
+        initial['dataHora'] = objeto.dataHora.strftime('%Y-%m-%dT%H:%M')
+        self.versaoAntesEditar = objeto.versao
+        self.quantidadeAntesEditar = objeto.quantidade
+        return initial
 
 class ComprasListar(ListView):
     model = Compra
@@ -44,7 +70,12 @@ class CompraExcluirLogica(DeleteView):
     success_url = reverse_lazy('compras:listar')
 
     def form_valid(self, form):
-        messages.warning(self.request, 'compra excluida com sucesso.')
+        messages.success(self.request, 'compra excluida com sucesso.')
+        compra = self.get_object()
+        versao = Versao.objects.get(id=compra.versao.id)
+        quantidade = compra.quantidade
+        versao.estoque -= quantidade
+        versao.save()
         return super().form_valid(form)
 
 # def compras(request):
