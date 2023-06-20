@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block 'body' %}
+    {{ block.super }}
+    <div class="container">
+        <a href="{%url 'colaboradores:editar' colaborador.pk %} " class="btn btn-primary botao">Editar</a>
+        <a href="{%url 'colaboradores:excluir' colaborador.pk %} " class="btn btn-danger botao">Excluir</a>
+        
+        <div class="colunas_duas">
+            {{ colaborador.nomeCompleto }}
+        </div>
+    </div>
+{% endblock %}

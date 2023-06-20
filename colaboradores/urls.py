@@ -2,9 +2,12 @@ from django.urls import path
 from . import views
 
 
+
 app_name = 'colaboradores'
 urlpatterns = [
-    path('', views.colaboradores, name='listar'),
-    path('editar/<int:id>', views.editar, name='editar'),
-    path('upd_colaborador/<int:id>', views.upd_colaborador, name='upd_colaborador'),
+    path('', views.ColaboradoresListar.as_view(), name='listar'),
+    path('cadastrar/', views.ColaboradorCriar.as_view(), name='criar'),
+    path('<int:pk>/detalhe', views.ColaboradorDetalhe.as_view(), name='detalhe'),
+    path('<int:pk>/editar', views.ColaboradorEditar.as_view(), name='editar'),
+    path('<int:pk>/excluir', views.ColaboradorExcluir.as_view(), name='excluir'),
 ]

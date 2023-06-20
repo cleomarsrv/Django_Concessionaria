@@ -41,15 +41,16 @@ class VendasEditar(UpdateView):
     def form_valid(self, form):
         versaoAposEditar = form.cleaned_data['versao']
         versaoAntesEditar = self.versaoAntesEditar
-        if versaoAposEditar.estoque <=0:
-            form.add_error('versao', f'{versaoAposEditar.nome} sem estoque!')
-            return self.form_invalid(form)
-        elif (versaoAposEditar != versaoAntesEditar):
+        
+        if (versaoAposEditar != versaoAntesEditar):
+            if versaoAposEditar.estoque <=0:
+                form.add_error('versao', f'{versaoAposEditar.nome} sem estoque!')
+                return self.form_invalid(form)
             versaoAntesEditar.estoque += 1
             versaoAposEditar.estoque -= 1
             versaoAposEditar.save()
             versaoAntesEditar.save()
-            messages.success(self.request, 'venda editada com sucesso. ')
+        messages.success(self.request, 'venda editada com sucesso. ')
         return super().form_valid(form)
     
     def get_initial(self):
