@@ -15,6 +15,11 @@ class ComprasListar(ListView):
     template_name = 'compras/compras.html'
     paginate_by = 10
 
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['versoes'] = Versao.objects.all().order_by('-estoque')
+        return context
+
 class CompraCriar(CreateView, LoginRequiredMixin):
     model = Compra
     form_class = ComprasModelForm

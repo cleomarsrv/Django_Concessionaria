@@ -4,11 +4,24 @@
 {% block 'body' %}
     <div class="container">
         <div class="row">
-            <form action="" method="POST">{% csrf_token %}
-                {{form.as_p}}
-                <input type="submit" value="Salvar">
-            </form>
+            <div class="col-md-6">
+                <form action="" method="POST">{% csrf_token %}
+                    <div class="colunas_duas">
+                        {% for field in form %}
+                                {{ field.label_tag }}
+                                {{ field }}
+                        {% endfor %}
+                    </div>
+                    <input type="submit" class="btn btn-success botao" value="Salvar">
+                </form>
+            </div>
+            {% if form.errors %}
+                <div class="col-md-3 alert-danger">
+                    {{ form.errors}}
+                </div>
+            {% endif %}
         </div>
+
     </div>
 {% endblock 'body' %}
 

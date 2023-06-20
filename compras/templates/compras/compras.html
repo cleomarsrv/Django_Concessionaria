@@ -47,9 +47,24 @@
                     
                 </table>
             </div>
-            <div class="col-md-1">
-                <h4>Estoque atualizados: DATETIME</h4>
-                <h5>Todos carros/versoes</h5>
+            <div class="col-md-4">
+                <table class="table table-dark">
+                    <thead>
+                        <tr class="head-listas">
+                            <th scope="col">Versao</th>
+                            <th scope="col">Estoque</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for versao in versoes %}
+                            <tr>
+                                <td>{{versao.nome}}</td>
+                                <td>{{versao.estoque}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    
+                </table>
             </div>
         </div>
     </div>
