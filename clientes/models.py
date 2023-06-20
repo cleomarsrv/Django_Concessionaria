@@ -13,7 +13,3 @@ class Cliente(Pessoa):
             ('permissao_vendedor', 'permissao vendendor'),
             ('permissao_funcionario', 'permissao todos funcionarios'),
         )
-    
-    # def get_absolute_url(self):
-    #     return reverse('clientes:clientes')
-    

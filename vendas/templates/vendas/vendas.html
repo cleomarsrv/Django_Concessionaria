@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3">
-                <a href="{% url 'vendas:criar' %}" class=" btn btn-primary botao">Nova venda</a>
+                <a href="{% url 'vendas:criar' %}" class=" btn btn-primary botao_topo">Nova venda</a>
             </div>
             <div class="col-md-5.5">
                 {{ block.super }}
@@ -37,8 +37,8 @@
                         {% for venda in venda_list %}
                             <tr>
                                 <td>
-                                    <a href="{% url 'vendas:editar' venda.pk %}" class="btn btn-primary botao">editar</a>
-                                    <a href="{% url 'vendas:excluir' venda.pk %}" class="btn btn-danger botao">excluir</a>
+                                    <a href="{% url 'vendas:editar' venda.pk %}" class="btn btn-primary botao_tabela">editar</a>
+                                    <a href="{% url 'vendas:excluir' venda.pk %}" class="btn btn-danger botao_tabela">excluir</a>
                                 </td>
                                 <td>{{venda.dataHora|date:"d/m/Y H:i"}}</td>
                                 <td>{{venda.detalhes}}</td>
