@@ -3,11 +3,17 @@
 {% block 'body' %}
 
     <div class="container">
-        {{ block.super }}
-        <form action="" method="POST">{% csrf_token %}
-            {{form.as_table}}
-            <input class="btn btn-success" type="submit" value="Salvar" >
-        </form>
+        <div class="row">
+            <div class="col-md-5">
+                <form action="" method="POST">{% csrf_token %}
+                    <div class="colunas_duas">
+                        {{form.as_p}}
+                    </div>
+                    <input class="btn btn-success" type="submit" value="Salvar" >
+                    <a href="javascript:history.back()" class="btn btn-secondary botao">Voltar</a>
+                </form>
+            </div>
+        </div>
 
     </div>
 

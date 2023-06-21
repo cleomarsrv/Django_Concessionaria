@@ -1,11 +1,17 @@
 {% extends 'base.html' %}
 
 {% block 'body' %}
-    <form action="" method="POST">{% csrf_token %}
-        <div class="colunas_tres">
-            {{form.as_p}}
+    <div class="container" >
+        <div class="row">
+            <div class="col-md-12">
+                <form action="" method="POST">{% csrf_token %}
+                    <div class="colunas_tres">
+                        {{form.as_p}}
+                    </div>
+                    <input type="submit" class="btn btn-success botao" value="{{botaoNome}}">
+                    <a href="javascript:history.back()" class="btn btn-secondary">Voltar</a>
+                </form>
+            </div>
         </div>
-        <input type="submit" class="btn btn-success botao" value="{{botaoNome}}">
-        <a href="javascript:history.back()" class="btn btn-secondary">Voltar</a>
-    </form>
+    </div>
 {% endblock 'body' %}

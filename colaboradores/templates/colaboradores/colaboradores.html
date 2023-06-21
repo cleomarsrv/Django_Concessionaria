@@ -29,7 +29,7 @@
                     <tbody>
                         {% for colaborador in colaborador_list %}
                             <tr>
-                                <th><a href="{% url 'colaboradores:detalhe' colaborador.pk %}">{{colaborador.cpf}}</a></th>
+                                <th><a style="color:#007bff" href="{% url 'colaboradores:detalhe' colaborador.pk %}">{{colaborador.cpf}}</a></th>
                                 <td>{{colaborador.nomeCompleto}}</td>
                                 <td>{{colaborador.email}}</td>
                                 <td>{{colaborador.dataNascimento}}</td>

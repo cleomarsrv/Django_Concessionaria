@@ -14,7 +14,7 @@ class ColaboradoresListar(ListView):
 
 class ColaboradorCriar(CreateView):
     model = Colaborador
-    fields = '__all__'
+    form_class = ColaboradorModelForm
     template_name = 'colaboradores/colaboradorForm.html'
     success_url = reverse_lazy('colaboradores:listar')
 
