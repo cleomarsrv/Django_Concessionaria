@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block 'body' %}
+    {{bloco.super}}
+    <h3>deseja {{ acao|upper }} o colaborador?</h3>
+    <ul> {{colaborador.nomeCompleto}}</ul>
+    <ul> {{colaborador.cpf}}</ul>
+    <ul> {{colaborador.telefone}}</ul>
+    <ul> {{colaborador.email}}</ul>
+    {% url 'colaborador:acao' colaborador.id as url %}
+    <form action="{{ url }}" method="POST"> {% csrf_token %}
+        <input type="submit" class="btn btn-{{acaoBotao}} botao" value="{{acao|capfirst}}">
+        <a href="javascript:history.back()" class="btn btn-secondary botao">Voltar</a>
+    </form>
+{% endblock %}

@@ -30,6 +30,12 @@ class ClienteCriar(CreateView,LoginRequiredMixin):
         context['botaoNome'] = 'Cadastrar'
         return context
 
+class ClienteListar(generic.ListView, LoginRequiredMixin):
+    model = Cliente
+    paginate_by = 8
+    template_name = 'clientes/clientes.html'
+    permission_required = 'clientes.permissao_funcionario'
+
 class ClienteEditar(UpdateView, LoginRequiredMixin):
     model = Cliente
     fields = '__all__'
@@ -51,12 +57,6 @@ class ClienteEditar(UpdateView, LoginRequiredMixin):
         context = super().get_context_data()
         context['botaoNome'] = 'Alterar'
         return context
-
-class ClienteListar(generic.ListView, LoginRequiredMixin):
-    model = Cliente
-    paginate_by = 8
-    template_name = 'clientes/clientes.html'
-    permission_required = 'clientes.permissao_funcionario'
 
 class ClienteExcluir(generic.DeleteView, LoginRequiredMixin):
     model  = Cliente

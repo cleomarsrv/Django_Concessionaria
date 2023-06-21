@@ -4,10 +4,67 @@
     {{ block.super }}
     <div class="container">
         <a href="{%url 'colaboradores:editar' colaborador.pk %} " class="btn btn-primary botao">Editar</a>
-        <a href="{%url 'colaboradores:excluir' colaborador.pk %} " class="btn btn-danger botao">Excluir</a>
-        
-        <div class="colunas_duas">
-            {{ colaborador.nomeCompleto }}
-        </div>
+        {% if colaborador.situacaoVinculo == 'Inativo' %}
+            <a href="{%url 'colaboradores:reativar' colaborador.id %} " class="btn btn-success botao">Reativar</a>
+        {% else %}
+            <a href="{%url 'colaboradores:inativar' colaborador.id %} " class="btn btn-danger botao">Inativar</a>
+        {% endif %}
+        <table class="table table-dark">
+            <thead>
+                <tr class="headLista">
+                    <th scope="col">cpf</th>
+                    <th scope="col">nome Completo</th>
+                    <th scope="col">email</th>
+                    <th scope="col">data nascimento</th>
+                    <th scope="col">telefone</th>
+                    <th scope="col">endereco</th>
+                    <th scope="col">estado civil</th>
+                </tr>
+            </thead>      
+
+            <tbody>
+                <tr>
+                    <td>{{colaborador.cpf}}</td>
+                    <td class="tdLargo">{{colaborador.nomeCompleto}}</td>
+                    <td>{{colaborador.email}}</td>
+                    <td>{{colaborador.dataNascimento|date:"d/m/Y"}}</td>
+                    <td>{{colaborador.telefone}}</td>
+                    <td class="tdLargo">{{colaborador.endereco}}</td>
+                    <td>{{colaborador.estadoCivil}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-dark">
+            <thead>
+                <tr class="headLista">
+                    <th scope="col">ctps</th>
+                    <th scope="col">pis</th>
+                    <th scope="col">nomePai</th>
+                    <th scope="col">nomeMae</th>
+                    <th scope="col">tipo vinculo</th>
+                    <th scope="col">cargo atual</th>
+                    <th scope="col">funcao atual</th>
+                    <th scope="col">salario atual</th>
+                    <th scope="col">data admissao</th>
+                    <th scope="col">data desligamento</th>
+                    <th scope="col">situacao vinculo</th>
+                </tr>
+            </thead>               
+            <tbody>
+                <tr>
+                    <td>{{colaborador.ctps}}</td>
+                    <td>{{colaborador.pis}}</td>
+                    <td class="tdLargo">{{colaborador.nomePai}}</td>
+                    <td class="tdLargo">{{colaborador.nomeMae}}</td>
+                    <td>{{colaborador.tipoVinculo}}</td>
+                    <td>{{colaborador.cargoAtual}}</td>
+                    <td>{{colaborador.funcaoAtual}}</td>
+                    <td>{{colaborador.salarioAtual}}</td>
+                    <td>{{colaborador.dataAdmissao|date:"d/m/Y"}}</td>
+                    <td>{{colaborador.dataDesligamento|date:"d/m/Y"}}</td>
+                    <td>{{colaborador.situacaoVinculo}}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 {% endblock %}

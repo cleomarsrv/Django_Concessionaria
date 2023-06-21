@@ -9,5 +9,6 @@ urlpatterns = [
     path('cadastrar/', views.ColaboradorCriar.as_view(), name='criar'),
     path('<int:pk>/detalhe', views.ColaboradorDetalhe.as_view(), name='detalhe'),
     path('<int:pk>/editar', views.ColaboradorEditar.as_view(), name='editar'),
-    path('<int:pk>/excluir', views.ColaboradorExcluir.as_view(), name='excluir'),
+    path('<int:id>/inativar', views.ColaboradorInativar, name='inativar'),
+    path('<int:id>/reativar', views.ColaboradorReativar, name='reativar'),
 ]
