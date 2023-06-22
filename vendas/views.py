@@ -41,7 +41,6 @@ class VendasEditar(UpdateView):
     def form_valid(self, form):
         versaoAposEditar = form.cleaned_data['versao']
         versaoAntesEditar = self.versaoAntesEditar
-        
         if (versaoAposEditar != versaoAntesEditar):
             if versaoAposEditar.estoque <=0:
                 form.add_error('versao', f'{versaoAposEditar.nome} sem estoque!')

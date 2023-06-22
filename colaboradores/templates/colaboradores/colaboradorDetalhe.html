@@ -25,12 +25,12 @@
             <tbody>
                 <tr>
                     <td>{{colaborador.cpf}}</td>
-                    <td class="tdLargo">{{colaborador.nomeCompleto}}</td>
+                    <td class="tdMedio">{{colaborador.nomeCompleto}}</td>
                     <td>{{colaborador.email}}</td>
                     <td>{{colaborador.dataNascimento|date:"d/m/Y"}}</td>
                     <td>{{colaborador.telefone}}</td>
-                    <td class="tdLargo">{{colaborador.endereco}}</td>
-                    <td>{{colaborador.estadoCivil}}</td>
+                    <td class="tdMedio">{{colaborador.endereco}}</td>
+                    <td>{{colaborador.get_estadoCivil_display}}</td>
                 </tr>
             </tbody>
         </table>
@@ -54,15 +54,15 @@
                 <tr>
                     <td>{{colaborador.ctps}}</td>
                     <td>{{colaborador.pis}}</td>
-                    <td class="tdLargo">{{colaborador.nomePai}}</td>
-                    <td class="tdLargo">{{colaborador.nomeMae}}</td>
-                    <td>{{colaborador.tipoVinculo}}</td>
-                    <td>{{colaborador.cargoAtual}}</td>
-                    <td>{{colaborador.funcaoAtual}}</td>
+                    <td class="tdMedio">{{colaborador.nomePai}}</td>
+                    <td class="tdMedio">{{colaborador.nomeMae}}</td>
+                    <td>{{colaborador.get_tipoVinculo_display}}</td>
+                    <td>{{colaborador.get_cargoAtual_display}}</td>
+                    <td>{{colaborador.get_funcaoAtual_display}}</td>
                     <td>{{colaborador.salarioAtual}}</td>
                     <td>{{colaborador.dataAdmissao|date:"d/m/Y"}}</td>
                     <td>{{colaborador.dataDesligamento|date:"d/m/Y"}}</td>
-                    <td>{{colaborador.situacaoVinculo}}</td>
+                    <td>{{colaborador.get_situacaoVinculo_display}}</td>
                 </tr>
             </tbody>
         </table>

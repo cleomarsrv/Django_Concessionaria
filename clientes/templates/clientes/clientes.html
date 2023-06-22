@@ -12,15 +12,14 @@
 {% endblock %}
 
 {% block 'body' %}
-
-    <div class="container" >
+    {{block.super}}
+    <div class="container">
         <div class="row">
             <div class="col-md">
                 <table class="table table-dark">
                     <thead>
                         <tr>
-                            <th scope="col">Opcoes</th>
-                            <th scope="col">CPF</th>
+                            <th scope="col">CPF (clique) </th>
                             <th scope="col">Nome Completo</th>
                             <th scope="col">Email</th>
                             <th scope="col">Data Nascimento</th>
@@ -30,11 +29,7 @@
                     <tbody>
                         {% for cliente in cliente_list %}
                             <tr>
-                                <th>
-                                    <a href="{% url 'clientes:editar' cliente.pk %}" class="btn btn-primary botao_tabela">editar</a>
-                                    <a href="{% url 'clientes:excluir' cliente.pk %}" class="btn btn-danger botao_tabela">excluir</a>
-                                </th>
-                                <th>{{cliente.cpf}}</th>
+                                <th><a class="corPadrao" href="{% url 'clientes:detalhe' cliente.pk%}">{{cliente.cpf}}</a></th>
                                 <td>{{cliente.nomeCompleto}}</td>
                                 <td>{{cliente.email}}</td>
                                 <td>{{cliente.dataNascimento}}</td>

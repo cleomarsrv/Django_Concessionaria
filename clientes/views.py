@@ -9,18 +9,16 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import ClienteModelForm
 
-class ClienteCriar(CreateView,LoginRequiredMixin):
-    model = Cliente
+class ClienteCriar(CreateView):
     form_class = ClienteModelForm
     template_name = 'clientes/clienteForm.html'
-    permisson_required = 'clientes.permissao_funcionario'
     success_url = reverse_lazy('clientes:listar')
 
     def form_valid(self, form):
         messages.success(self.request, f'cliente {self.request.POST.get("nomeCompleto")} cadastrado com sucesso.')
-        return super().form_valid(form)
-    
-    def get_context_data(self):
+        return self.form_valid(form)
+        
+    def get_context_data(self, form=None):
         context = super().get_context_data()
         context['botaoNome'] = 'Cadastrar'
         return context
@@ -31,31 +29,34 @@ class ClienteListar(generic.ListView, LoginRequiredMixin):
     template_name = 'clientes/clientes.html'
     permission_required = 'clientes.permissao_funcionario'
 
+class ClienteDetalhe(generic.DetailView):
+    model = Cliente
+    template_name = 'clientes/clienteDetalhe.html'
+
 class ClienteEditar(UpdateView, LoginRequiredMixin):
     model = Cliente
-    fields = '__all__'
+    form_class = ClienteModelForm
     template_name = 'clientes/clienteForm.html'
     permission_required = 'clientes.permissao_funcionario'
     success_url = reverse_lazy('clientes:listar')
 
-    def get_form(self, form_class=None):
-        form = super().get_form(form_class)
-        for field in form.fields:
-            form.fields[field].widget.attrs.update({'class':'form-control'})
-        return form
-
     def form_valid(self, form):
-        messages.success(self.request, f'cliente {self.request.POST.get("nomeCompleto")} alterado com sucesso. ')
-        return super().form_valid(form)
+        cpf =  form.cleaned_data['cpf']
+        if (len(cpf) != 11) or (not cpf.isnumeric()):
+            form.add_error('cpf', 'cpf deve ter 11 numeros, sem ponto, hifen, etc')
+            return self.form_invalid(form)
+        else:
+            messages.success(self.request, f'cliente {self.request.POST.get("nomeCompleto")} alterado com sucesso. ')
+            return super().form_valid(form)
     
-    def get_context_data(self):
+    def get_context_data(self, form=None):
         context = super().get_context_data()
         context['botaoNome'] = 'Alterar'
         return context
 
 class ClienteExcluir(generic.DeleteView, LoginRequiredMixin):
     model  = Cliente
-    template_name = 'clientes/cliente_excluir.html'
+    template_name = 'clientes/clienteExcluir.html'
     permission_required = 'clientes.permissao_gerente'
     success_url = reverse_lazy('clientes:listar')
 

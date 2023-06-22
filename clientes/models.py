@@ -13,3 +13,6 @@ class Cliente(Pessoa):
             ('permissao_vendedor', 'permissao vendendor'),
             ('permissao_funcionario', 'permissao todos funcionarios'),
         )
+        
+    def __str__(self) -> str:
+        return self.nomeCompleto
