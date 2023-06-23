@@ -1,5 +1,4 @@
 from django.db import models
-from fornecedores.models import Fornecedor
 from django.template.defaultfilters import slugify
 
 class Seguranca(models.Model):

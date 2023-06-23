@@ -1,6 +1,5 @@
 from django.db import models
 from carros.models import Versao
-from fornecedores.models import Fornecedor
 
 class Compra(models.Model):
     dataHora = models.DateTimeField()

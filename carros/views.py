@@ -4,7 +4,6 @@ from django.contrib.messages import constants
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.http import HttpResponse
-from fornecedores.models import Fornecedor
 from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin

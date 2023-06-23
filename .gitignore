@@ -1,4 +1,6 @@
-venv/
-db.sqlite3
-fixtures/
+.venv/
 media/
+fixtures/
+db.sqlite3
+Pipfile
+Pipfile.lock
