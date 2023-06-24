@@ -4,6 +4,14 @@ from colaboradores.models import Colaborador
 from carros.models import Versao
 
 class Venda(models.Model):
+
+    class Meta:
+        permissions = (
+            ('permissao_gerente', 'permissao gerente'),
+            ('permissao_supervisor', 'permissao supervisor'),
+            ('permissao_vendedor', 'permissao vendedor'),
+            ('permissao_funcionario', 'permissao todos funcionarios'),
+        )
     situacaoChoices = (
         ('P', 'processada'),
         ('C', 'cancelada'),

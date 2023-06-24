@@ -9,10 +9,11 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import ClienteModelForm
 
-class ClienteCriar(CreateView):
+class ClienteCriar(CreateView,LoginRequiredMixin):
     form_class = ClienteModelForm
     template_name = 'clientes/clienteForm.html'
     success_url = reverse_lazy('clientes:listar')
+    permission_required = 'clientes.permissao_funcionario'
 
     def form_valid(self, form):
         messages.success(self.request, f'cliente {self.request.POST.get("nomeCompleto")} cadastrado com sucesso.')
@@ -29,9 +30,10 @@ class ClienteListar(generic.ListView, LoginRequiredMixin):
     template_name = 'clientes/clientes.html'
     permission_required = 'clientes.permissao_funcionario'
 
-class ClienteDetalhe(generic.DetailView):
+class ClienteDetalhe(generic.DetailView,LoginRequiredMixin):
     model = Cliente
     template_name = 'clientes/clienteDetalhe.html'
+    permission_required = 'clientes.permissao_funcionario'
 
 class ClienteEditar(UpdateView, LoginRequiredMixin):
     model = Cliente
@@ -57,7 +59,7 @@ class ClienteEditar(UpdateView, LoginRequiredMixin):
 class ClienteExcluir(generic.DeleteView, LoginRequiredMixin):
     model  = Cliente
     template_name = 'clientes/clienteExcluir.html'
-    permission_required = 'clientes.permissao_gerente'
+    permission_required = 'clientes.permissao_supervisor'
     success_url = reverse_lazy('clientes:listar')
 
     def form_valid(self, form):

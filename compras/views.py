@@ -10,9 +10,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import ComprasModelForm
 
 
-class ComprasListar(ListView):
+class ComprasListar(ListView,LoginRequiredMixin):
     model = Compra
     template_name = 'compras/compras.html'
+    permission_required = 'compras.permissao_supervisor'
     paginate_by = 10
 
     def get_context_data(self, *args, **kwargs):
@@ -25,7 +26,7 @@ class CompraCriar(CreateView, LoginRequiredMixin):
     form_class = ComprasModelForm
     template_name = 'compras/compraForm.html'
     success_url = reverse_lazy('compras:listar')
-    permission_required = 'compras.permissao_gerente', 'compras.permissao_supervisor'
+    permission_required = 'compras.permissao_supervisor'
 
     def form_valid(self, form):
         messages.success(self.request, 'compra lancada com sucesso. ')
@@ -36,10 +37,11 @@ class CompraCriar(CreateView, LoginRequiredMixin):
         versao.save()
         return super().form_valid(form)
 
-class CompraEditar(UpdateView):
+class CompraEditar(UpdateView,LoginRequiredMixin):
     model = Compra
     form_class = ComprasModelForm
     template_name = 'compras/compraForm.html'
+    permission_required = 'compras.permissao_supervisor'
     success_url = reverse_lazy('compras:listar')
 
     def form_valid(self, form):
@@ -69,9 +71,10 @@ class CompraEditar(UpdateView):
         return initial
 
 
-class CompraExcluirLogica(DeleteView):
+class CompraExcluirLogica(DeleteView,LoginRequiredMixin):
     model = Compra
     template_name = 'compras/compraExcluir.html'
+    permission_required = 'clientes.permissao_gerente'
     success_url = reverse_lazy('compras:listar')
 
     def form_valid(self, form):

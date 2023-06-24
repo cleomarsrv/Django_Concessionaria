@@ -10,7 +10,7 @@ class Cliente(Pessoa):
         permissions = (
             ('permissao_gerente', 'permissao gerente'),
             ('permissao_supervisor', 'permissao supervisor'),
-            ('permissao_vendedor', 'permissao vendendor'),
+            ('permissao_vendedor', 'permissao vendedor'),
             ('permissao_funcionario', 'permissao todos funcionarios'),
         )
         

@@ -6,19 +6,22 @@ from carros.models import Carro, Versao
 from clientes.models import Cliente
 from colaboradores.models import Colaborador
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .forms import VendasModelForm
 
-class VendasListar(ListView):
+class VendasListar(ListView,LoginRequiredMixin):
     model = Venda
     template_name = 'vendas/vendas.html'
+    permission_required = 'vendas.permissao_funcionario'
     paginate_by = 10
 
-class VendasCriar(CreateView):
+class VendasCriar(CreateView,LoginRequiredMixin):
     model = Venda
     form_class = VendasModelForm
     template_name = 'vendas/vendaForm.html'
+    permission_required = 'vendas.permissao_funcionario'
     success_url = reverse_lazy('vendas:listar')
 
     def form_valid(self, form):
@@ -32,10 +35,11 @@ class VendasCriar(CreateView):
             versao.save()
             return super().form_valid(form)
 
-class VendasEditar(UpdateView):
+class VendasEditar(UpdateView,LoginRequiredMixin):
     model = Venda
     form_class = VendasModelForm
     template_name = 'vendas/vendaForm.html'
+    permission_required = 'vendas.permissao_funcionario'
     success_url = reverse_lazy('vendas:listar')
 
     def form_valid(self, form):
@@ -59,9 +63,10 @@ class VendasEditar(UpdateView):
         self.versaoAntesEditar = object_.versao
         return initial
 
-class VendasExcluir(DeleteView):
+class VendasExcluir(DeleteView,LoginRequiredMixin):
     model = Venda
     template_name = 'vendas/vendaExcluir.html'
+    permission_required = 'vendas.permissao_supervisor'
     success_url = reverse_lazy('vendas:listar')
 
     def form_valid(self, form):

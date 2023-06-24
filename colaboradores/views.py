@@ -5,17 +5,23 @@ from django.views.generic import ListView, DetailView
 from .models import Colaborador
 from .forms import ColaboradorModelForm
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required, permission_required
 
-class ColaboradoresListar(ListView):
+
+class ColaboradoresListar(ListView,LoginRequiredMixin):
     model = Colaborador
     fields = '__all__'
     template_name = 'colaboradores/colaboradores.html'
+    permission_required = 'clientes.permissao_supervisor'
     paginate_by = 8
 
-class ColaboradorCriar(CreateView):
+
+class ColaboradorCriar(CreateView,LoginRequiredMixin):
     model = Colaborador
     form_class = ColaboradorModelForm
     template_name = 'colaboradores/colaboradorForm.html'
+    permission_required = 'clientes.permissao_gerente'
     success_url = reverse_lazy('colaboradores:listar')
 
     def get_context_data(self):
@@ -28,14 +34,16 @@ class ColaboradorCriar(CreateView):
         messages.success(self.request, f'Colaborador: {nomeCompleto } cadastrado com sucesso.')
         return super().form_valid(form)
 
-class ColaboradorDetalhe(DetailView):
+class ColaboradorDetalhe(DetailView,LoginRequiredMixin):
     model = Colaborador
     template_name = 'colaboradores/colaboradorDetalhe.html'
+    permission_required = 'clientes.permissao_supervisor'
 
-class ColaboradorEditar(UpdateView):
+class ColaboradorEditar(UpdateView,LoginRequiredMixin):
     model = Colaborador
     form_class = ColaboradorModelForm
     template_name = 'colaboradores/colaboradorForm.html'
+    permission_required = 'clientes.permissao_gerente'
     success_url = reverse_lazy('colaboradores:listar')
 
     def get_context_data(self):
@@ -47,6 +55,7 @@ class ColaboradorEditar(UpdateView):
         messages.success(self.request, f'Colaborador: {self.object.nomeCompleto } alterado com sucesso.')
         return super().form_valid(form)
 
+@permission_required('colaboradores.permissao_gerente')
 def ColaboradorInativar(request, id):
     if request.method == 'GET':
         colaborador = get_object_or_404(Colaborador, id=id)
@@ -65,6 +74,7 @@ def ColaboradorInativar(request, id):
         messages.info(request, f'colaborador {colaborador.nomeCompleto} foi INATIVADO.')
         return redirect(reverse('colaboradores:listar'))
 
+@permission_required('colaboradores.permissao_gerente')
 def ColaboradorReativar(request, id):
     if request.method == 'GET':
         colaborador = get_object_or_404(Colaborador, id=id)

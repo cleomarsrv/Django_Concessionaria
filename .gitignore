@@ -1,6 +1,8 @@
 .venv/
-media/
+media/*
 fixtures/
 db.sqlite3
 Pipfile
 Pipfile.lock
+.env
+templates/registration

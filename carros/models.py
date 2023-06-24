@@ -61,7 +61,7 @@ class Carro(models.Model):
         permissions = (
             ('permissao_gerente', 'permissao gerente'),
             ('permissao_supervisor', 'permissao supervisor'),
-            ('permissao_vendedor', 'permissao vendendor'),
+            ('permissao_vendedor', 'permissao vendedor'),
             ('permissao_funcionario', 'permissao todos funcionarios'),
         )
     
@@ -82,7 +82,8 @@ class Versao(models.Model):
     class Meta:
         permissions = (
             ('permissao_gerente', 'permissao gerente'),
-            ('permissao_vendedor', 'permissao vendendor'),
+            ('permissao_supervisor', 'permissao supervisor'),
+            ('permissao_vendedor2', 'permissao vendedor'),
             ('permissao_funcionario', 'permissao todos funcionarios'),
         )
 

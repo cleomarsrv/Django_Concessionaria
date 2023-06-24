@@ -5,6 +5,12 @@ class Colaborador(Pessoa):
 
     class Meta:
         verbose_name_plural = 'Colaboradores'
+        permissions = (
+            ('permissao_gerente', 'permissao gerente'),
+            ('permissao_supervisor', 'permissao supervisor'),
+            ('permissao_vendedor', 'permissao vendedor'),
+            ('permissao_funcionario', 'permissao todos funcionarios'),
+        )
 
     situacaoVinculoChoices = (
         ('A','Ativo'),
