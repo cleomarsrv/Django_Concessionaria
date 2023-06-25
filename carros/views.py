@@ -6,7 +6,7 @@ from django.urls import reverse, reverse_lazy
 from django.http import HttpResponse
 from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required, permission_required
 from carros.forms import VersaoModelForm
 
@@ -37,11 +37,13 @@ def carroCriar(request):
         slugCarro = carro.slugCarro
         return redirect(reverse('carros:versaoCriar', kwargs={'slugCarro':slugCarro}))
         
-class CarroEditar(UpdateView, LoginRequiredMixin):
+class CarroEditar(PermissionRequiredMixin, UpdateView):
     model = Carro
     fields = ['nome']
     template_name = 'carros/carroEditar.html'
     permission_required = 'carros.permissao_supervisor'
+    # raise_exception = True
+    
     success_url = reverse_lazy('carros:listar')
 
     def get_object(self, queryset=None):
@@ -51,7 +53,7 @@ class CarroEditar(UpdateView, LoginRequiredMixin):
         obj = queryset.get(**{slug_field: slug})
         return obj
 
-class CarroExcluir(DeleteView, LoginRequiredMixin):
+class CarroExcluir(PermissionRequiredMixin, DeleteView):
     model = Carro
     template_name = 'carros/carroExcluir.html'
     permission_required = 'carros.permissao_gerente'
@@ -85,7 +87,7 @@ def versoes(request, slugCarro):
     return HttpResponse('teste')
 
 
-class VersaoDetalheView(generic.DetailView,LoginRequiredMixin):
+class VersaoDetalheView(PermissionRequiredMixin, generic.DetailView):
     model = Versao
     template_name='carros/versaoDetalhe.html'
     permission_required = 'carros.permissao_funcionario'
@@ -118,7 +120,7 @@ def versaoCriar(request, slugCarro):
     return redirect(reverse('carros:versoes', kwargs={'slugCarro':slugCarro}))
 
 
-class VersaoEditar(UpdateView,LoginRequiredMixin):
+class VersaoEditar(PermissionRequiredMixin, UpdateView):
     model = Versao
     fields = ['nome','motor','combustivel','direcao','seguranca','acessorio','imagem','ano','modelo']
     template_name = 'carros/versaoEditar.html'
@@ -137,7 +139,7 @@ class VersaoEditar(UpdateView,LoginRequiredMixin):
         return super().form_valid(form)
 
 
-class VersaoExcluir(DeleteView,LoginRequiredMixin):
+class VersaoExcluir(PermissionRequiredMixin, DeleteView):
     model = Versao
     template_name = 'carros/versaoExcluir.html'
     success_url = reverse_lazy('carros:versoes', kwargs={'slugCarro':'teste'})

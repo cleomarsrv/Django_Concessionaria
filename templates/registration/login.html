@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block 'body' %}
+
+  {% if form.errors %}
+    <p> usuario ou senha não conferem. tente novamente.</p>
+  {% endif %}
+
+  {% if next %}
+    {% if user.is_authenticated %}
+      <p>Usuario sem acesso a essa pagina. entre em contato com o gerente.</p>
+    {% else %}
+      <p>Faça login para acessar.</p>
+    {% endif %}
+  {% endif %}
+
+  <div class="container">
+    <form method="post" action="{% url 'login' %}">{% csrf_token %}
+      <table>
+        <tr>
+          <td>{{ form.username.label_tag }}</td>
+          <td>{{ form.username }}</td>
+        </tr>
+        <tr>
+          <td>{{ form.password.label_tag }}</td>
+          <td>{{ form.password }}</td>
+        </tr>
+      </table>
+      <input class="btn btn-primary botao" type="submit" value="Entrar" />
+      <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+
+    <p><a href="{% url 'password_reset' %}">Esqueci minha senha</a></p>
+  </div>
+{% endblock %}

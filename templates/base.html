@@ -38,6 +38,15 @@
             <a class="nav-link" href="{% url 'colaboradores:listar' %}">Colaboradores</a>
           </li>
         </ul>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            {% if user.is_authenticated %}
+              <a class="nav-link" href="{% url 'logout' %}" style="color:#007bff">Usuário: {{ user.get_username }} | Sair</a>
+            {% else %}
+              <a class="nav-link" href="{% url 'login' %}" style="color:#007bff">Entrar</a>
+            {% endif %}
+          </li>
+        </ul>
       </div>
     </nav>
    

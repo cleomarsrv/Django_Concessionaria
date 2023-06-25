@@ -6,18 +6,18 @@ from carros.models import Carro, Versao
 from clientes.models import Cliente
 from colaboradores.models import Colaborador
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .forms import VendasModelForm
 
-class VendasListar(ListView,LoginRequiredMixin):
+class VendasListar(PermissionRequiredMixin, ListView):
     model = Venda
     template_name = 'vendas/vendas.html'
     permission_required = 'vendas.permissao_funcionario'
     paginate_by = 10
 
-class VendasCriar(CreateView,LoginRequiredMixin):
+class VendasCriar(PermissionRequiredMixin, CreateView):
     model = Venda
     form_class = VendasModelForm
     template_name = 'vendas/vendaForm.html'
@@ -35,7 +35,7 @@ class VendasCriar(CreateView,LoginRequiredMixin):
             versao.save()
             return super().form_valid(form)
 
-class VendasEditar(UpdateView,LoginRequiredMixin):
+class VendasEditar(PermissionRequiredMixin, UpdateView):
     model = Venda
     form_class = VendasModelForm
     template_name = 'vendas/vendaForm.html'
@@ -63,7 +63,7 @@ class VendasEditar(UpdateView,LoginRequiredMixin):
         self.versaoAntesEditar = object_.versao
         return initial
 
-class VendasExcluir(DeleteView,LoginRequiredMixin):
+class VendasExcluir(PermissionRequiredMixin, DeleteView):
     model = Venda
     template_name = 'vendas/vendaExcluir.html'
     permission_required = 'vendas.permissao_supervisor'

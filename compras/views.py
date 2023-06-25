@@ -6,11 +6,11 @@ from django.urls import reverse, reverse_lazy
 from django.contrib import messages
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from .forms import ComprasModelForm
 
 
-class ComprasListar(ListView,LoginRequiredMixin):
+class ComprasListar(PermissionRequiredMixin, ListView):
     model = Compra
     template_name = 'compras/compras.html'
     permission_required = 'compras.permissao_supervisor'
@@ -21,7 +21,7 @@ class ComprasListar(ListView,LoginRequiredMixin):
         context['versoes'] = Versao.objects.all().order_by('-estoque')
         return context
 
-class CompraCriar(CreateView, LoginRequiredMixin):
+class CompraCriar(PermissionRequiredMixin, CreateView):
     model = Compra
     form_class = ComprasModelForm
     template_name = 'compras/compraForm.html'
@@ -37,7 +37,7 @@ class CompraCriar(CreateView, LoginRequiredMixin):
         versao.save()
         return super().form_valid(form)
 
-class CompraEditar(UpdateView,LoginRequiredMixin):
+class CompraEditar(PermissionRequiredMixin, UpdateView):
     model = Compra
     form_class = ComprasModelForm
     template_name = 'compras/compraForm.html'
@@ -71,7 +71,7 @@ class CompraEditar(UpdateView,LoginRequiredMixin):
         return initial
 
 
-class CompraExcluirLogica(DeleteView,LoginRequiredMixin):
+class CompraExcluirLogica(PermissionRequiredMixin, DeleteView):
     model = Compra
     template_name = 'compras/compraExcluir.html'
     permission_required = 'clientes.permissao_gerente'

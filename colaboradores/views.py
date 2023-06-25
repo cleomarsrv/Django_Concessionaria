@@ -5,11 +5,11 @@ from django.views.generic import ListView, DetailView
 from .models import Colaborador
 from .forms import ColaboradorModelForm
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required, permission_required
 
 
-class ColaboradoresListar(ListView,LoginRequiredMixin):
+class ColaboradoresListar(PermissionRequiredMixin, ListView):
     model = Colaborador
     fields = '__all__'
     template_name = 'colaboradores/colaboradores.html'
@@ -17,7 +17,7 @@ class ColaboradoresListar(ListView,LoginRequiredMixin):
     paginate_by = 8
 
 
-class ColaboradorCriar(CreateView,LoginRequiredMixin):
+class ColaboradorCriar(PermissionRequiredMixin, CreateView):
     model = Colaborador
     form_class = ColaboradorModelForm
     template_name = 'colaboradores/colaboradorForm.html'
@@ -34,12 +34,12 @@ class ColaboradorCriar(CreateView,LoginRequiredMixin):
         messages.success(self.request, f'Colaborador: {nomeCompleto } cadastrado com sucesso.')
         return super().form_valid(form)
 
-class ColaboradorDetalhe(DetailView,LoginRequiredMixin):
+class ColaboradorDetalhe(PermissionRequiredMixin, DetailView):
     model = Colaborador
     template_name = 'colaboradores/colaboradorDetalhe.html'
     permission_required = 'clientes.permissao_supervisor'
 
-class ColaboradorEditar(UpdateView,LoginRequiredMixin):
+class ColaboradorEditar(PermissionRequiredMixin, UpdateView):
     model = Colaborador
     form_class = ColaboradorModelForm
     template_name = 'colaboradores/colaboradorForm.html'

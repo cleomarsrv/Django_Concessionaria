@@ -176,3 +176,7 @@ label{
 .table td {
     border: 2px solid white;
 } */
+
+.navbar-nav.ml-auto {
+    margin-right: 0;
+  }
