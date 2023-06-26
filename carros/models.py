@@ -1,5 +1,8 @@
 from django.db import models
 from django.template.defaultfilters import slugify
+from datetime import date
+
+anoAtual = date.today().year
 
 class Seguranca(models.Model):
     item = models.CharField(max_length=50)
@@ -49,7 +52,7 @@ class Carro(models.Model):
     nome = models.CharField(max_length=30, unique=True)
     slugCarro = models.SlugField(unique=True, null=True, blank=True)
 
-    def __str__(self) -> str:
+    def __str__(self):
         return self.nome
 
     def save(self, *args, **kwargs):
@@ -74,8 +77,8 @@ class Versao(models.Model):
     seguranca = models.ManyToManyField(Seguranca, related_name="versao_seguranca", blank=True)
     acessorio = models.ManyToManyField(Acessorio, related_name="versao_acessorio", blank=True)
     imagem = models.ImageField(upload_to='carros', blank=True, null=True)
-    ano = models.IntegerField(default='2023')
-    modelo = models.IntegerField(default='2023')
+    ano = models.IntegerField(default=anoAtual)
+    modelo = models.IntegerField(default=anoAtual)
     estoque = models.IntegerField(default=0) 
     slugVersao = models.SlugField(unique=True, null=True, blank=True)
 
@@ -83,7 +86,7 @@ class Versao(models.Model):
         permissions = (
             ('permissao_gerente', 'permissao gerente'),
             ('permissao_supervisor', 'permissao supervisor'),
-            ('permissao_vendedor2', 'permissao vendedor'),
+            ('permissao_vendedor', 'permissao vendedor'),
             ('permissao_funcionario', 'permissao todos funcionarios'),
         )
 

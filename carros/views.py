@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.messages import constants
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import PermissionRequiredMixin
@@ -28,6 +28,7 @@ def carros(request):
 
 @login_required(login_url=reverse_lazy('login'))
 @RedirectPermissionRequired
+# @permission_required('carros.permissao_supervisor', login_url=reverse_lazy('index'))
 @permission_required('carros.permissao_supervisor', raise_exception=True)
 def carroCriar(request):
     if request.method == "GET":
@@ -88,7 +89,6 @@ def versoes(request, slugCarro):
         'carroSelecionado':carroSelecionado,
     }
     return render(request, 'carros/carroVersoes.html', context=context)
-    return HttpResponse('teste')
 
 
 class VersaoDetalheView(RedirectPermissionRequiredMixin, generic.DetailView):

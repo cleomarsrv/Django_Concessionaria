@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from carros.models import Carro, Versao
 from .models import Compra
 from django.urls import reverse, reverse_lazy

@@ -41,6 +41,6 @@ class Colaborador(Pessoa):
     cargoAtual = models.CharField(max_length=1, choices=cargoAtualChoices, verbose_name='Cargo atual')
     funcaoAtual = models.CharField(max_length=1, choices=funcaoAtualChoices, verbose_name='Funcao atual')
     salarioAtual = models.DecimalField(max_digits=15, decimal_places=2, verbose_name='Salario atual')
-    dataAdmissao = models.DateField( verbose_name='Admissao')
+    dataAdmissao = models.DateField(verbose_name='Admissao')
     dataDesligamento = models.DateField(null=True, verbose_name='Desligamento')
     situacaoVinculo = models.CharField(max_length=1, choices=situacaoVinculoChoices, verbose_name='Situacao  vinculo')

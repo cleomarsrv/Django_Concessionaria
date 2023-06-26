@@ -14,7 +14,7 @@ class RedirectPermissionRequiredMixin(PermissionRequiredMixin):
             messages.error(self.request, f'usuário sem permissão de acesso, contate o gerente. Página solicitada {self.request.path}')
             return HttpResponseRedirect(referer)
         messages.error(self.request, 'usuário sem permissão de acesso a pagina solicitada, contate o gerente.')
-        return redirect(reverse_lazy('inicio'))
+        return redirect(reverse_lazy('index'))
 
 def RedirectPermissionRequired(request, slugCarro=None):
     def referer(request, slugCarro=None):
@@ -23,5 +23,5 @@ def RedirectPermissionRequired(request, slugCarro=None):
             messages.error(request, f'usuário sem permissão de acesso, contate o gerente. Página solicitada {request.path}')
             return HttpResponseRedirect(referer)
         messages.error(request, 'usuário sem permissão de acesso a pagina solicitada, contate o gerente.')
-        return redirect(reverse_lazy('inicio'))
+        return redirect(reverse_lazy('index'))
     return referer

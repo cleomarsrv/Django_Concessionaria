@@ -1,12 +1,6 @@
-from django.shortcuts import render, redirect
-from django.urls import reverse, reverse_lazy
-from django.http import HttpResponse
+from django.urls import reverse_lazy
 from .models import Venda
-from carros.models import Carro, Versao
-from clientes.models import Cliente
-from colaboradores.models import Colaborador
 from django.contrib import messages
-from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .forms import VendasModelForm
