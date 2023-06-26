@@ -10,14 +10,16 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .forms import VendasModelForm
+from permissoes.redirecionar import RedirectPermissionRequiredMixin
 
-class VendasListar(PermissionRequiredMixin, ListView):
+
+class VendasListar(RedirectPermissionRequiredMixin, ListView):
     model = Venda
     template_name = 'vendas/vendas.html'
     permission_required = 'vendas.permissao_funcionario'
     paginate_by = 10
 
-class VendasCriar(PermissionRequiredMixin, CreateView):
+class VendasCriar(RedirectPermissionRequiredMixin, CreateView):
     model = Venda
     form_class = VendasModelForm
     template_name = 'vendas/vendaForm.html'
@@ -35,7 +37,7 @@ class VendasCriar(PermissionRequiredMixin, CreateView):
             versao.save()
             return super().form_valid(form)
 
-class VendasEditar(PermissionRequiredMixin, UpdateView):
+class VendasEditar(RedirectPermissionRequiredMixin, UpdateView):
     model = Venda
     form_class = VendasModelForm
     template_name = 'vendas/vendaForm.html'
@@ -63,7 +65,7 @@ class VendasEditar(PermissionRequiredMixin, UpdateView):
         self.versaoAntesEditar = object_.versao
         return initial
 
-class VendasExcluir(PermissionRequiredMixin, DeleteView):
+class VendasExcluir(RedirectPermissionRequiredMixin, DeleteView):
     model = Venda
     template_name = 'vendas/vendaExcluir.html'
     permission_required = 'vendas.permissao_supervisor'

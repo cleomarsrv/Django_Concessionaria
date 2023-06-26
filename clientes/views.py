@@ -8,8 +8,10 @@ from django.views import generic
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from .forms import ClienteModelForm
+from permissoes.redirecionar import RedirectPermissionRequiredMixin
 
-class ClienteCriar(PermissionRequiredMixin, CreateView):
+
+class ClienteCriar(RedirectPermissionRequiredMixin, CreateView):
     form_class = ClienteModelForm
     template_name = 'clientes/clienteForm.html'
     success_url = reverse_lazy('clientes:listar')
@@ -24,18 +26,18 @@ class ClienteCriar(PermissionRequiredMixin, CreateView):
         context['botaoNome'] = 'Cadastrar'
         return context
 
-class ClienteListar(PermissionRequiredMixin, generic.ListView):
+class ClienteListar(RedirectPermissionRequiredMixin, generic.ListView):
     model = Cliente
     paginate_by = 8
     template_name = 'clientes/clientes.html'
     permission_required = 'clientes.permissao_funcionario'
 
-class ClienteDetalhe(PermissionRequiredMixin, generic.DetailView):
+class ClienteDetalhe(RedirectPermissionRequiredMixin, generic.DetailView):
     model = Cliente
     template_name = 'clientes/clienteDetalhe.html'
     permission_required = 'clientes.permissao_funcionario'
 
-class ClienteEditar(PermissionRequiredMixin, UpdateView):
+class ClienteEditar(RedirectPermissionRequiredMixin, UpdateView):
     model = Cliente
     form_class = ClienteModelForm
     template_name = 'clientes/clienteForm.html'
@@ -56,7 +58,7 @@ class ClienteEditar(PermissionRequiredMixin, UpdateView):
         context['botaoNome'] = 'Alterar'
         return context
 
-class ClienteExcluir(PermissionRequiredMixin, generic.DeleteView):
+class ClienteExcluir(RedirectPermissionRequiredMixin, generic.DeleteView):
     model  = Cliente
     template_name = 'clientes/clienteExcluir.html'
     permission_required = 'clientes.permissao_supervisor'

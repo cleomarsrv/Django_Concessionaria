@@ -8,9 +8,10 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from .forms import ComprasModelForm
+from permissoes.redirecionar import RedirectPermissionRequiredMixin
 
 
-class ComprasListar(PermissionRequiredMixin, ListView):
+class ComprasListar(RedirectPermissionRequiredMixin, ListView):
     model = Compra
     template_name = 'compras/compras.html'
     permission_required = 'compras.permissao_supervisor'
@@ -21,7 +22,7 @@ class ComprasListar(PermissionRequiredMixin, ListView):
         context['versoes'] = Versao.objects.all().order_by('-estoque')
         return context
 
-class CompraCriar(PermissionRequiredMixin, CreateView):
+class CompraCriar(RedirectPermissionRequiredMixin, CreateView):
     model = Compra
     form_class = ComprasModelForm
     template_name = 'compras/compraForm.html'
@@ -37,7 +38,7 @@ class CompraCriar(PermissionRequiredMixin, CreateView):
         versao.save()
         return super().form_valid(form)
 
-class CompraEditar(PermissionRequiredMixin, UpdateView):
+class CompraEditar(RedirectPermissionRequiredMixin, UpdateView):
     model = Compra
     form_class = ComprasModelForm
     template_name = 'compras/compraForm.html'
@@ -70,8 +71,7 @@ class CompraEditar(PermissionRequiredMixin, UpdateView):
         self.quantidadeAntesEditar = objeto.quantidade
         return initial
 
-
-class CompraExcluirLogica(PermissionRequiredMixin, DeleteView):
+class CompraExcluirLogica(RedirectPermissionRequiredMixin, DeleteView):
     model = Compra
     template_name = 'compras/compraExcluir.html'
     permission_required = 'clientes.permissao_gerente'

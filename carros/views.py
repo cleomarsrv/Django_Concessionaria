@@ -3,14 +3,16 @@ from django.contrib import messages
 from django.contrib.messages import constants
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required, permission_required
 from carros.forms import VersaoModelForm
+from permissoes.redirecionar import RedirectPermissionRequiredMixin, RedirectPermissionRequired
 
-@login_required
+
+@login_required(login_url=reverse_lazy('login'))
 def carros(request):
     carros = Carro.objects.all()
     todasVersoes = Versao.objects.all()
@@ -24,7 +26,9 @@ def carros(request):
     }
     return render(request, 'carros/carros.html', context=context)
 
-@permission_required('carros.permissao_supervisor')
+@login_required(login_url=reverse_lazy('login'))
+@RedirectPermissionRequired
+@permission_required('carros.permissao_supervisor', raise_exception=True)
 def carroCriar(request):
     if request.method == "GET":
         return render(request, 'carros/carroCriar.html')
@@ -37,7 +41,7 @@ def carroCriar(request):
         slugCarro = carro.slugCarro
         return redirect(reverse('carros:versaoCriar', kwargs={'slugCarro':slugCarro}))
         
-class CarroEditar(PermissionRequiredMixin, UpdateView):
+class CarroEditar(RedirectPermissionRequiredMixin, UpdateView):
     model = Carro
     fields = ['nome']
     template_name = 'carros/carroEditar.html'
@@ -53,7 +57,7 @@ class CarroEditar(PermissionRequiredMixin, UpdateView):
         obj = queryset.get(**{slug_field: slug})
         return obj
 
-class CarroExcluir(PermissionRequiredMixin, DeleteView):
+class CarroExcluir(RedirectPermissionRequiredMixin, DeleteView):
     model = Carro
     template_name = 'carros/carroExcluir.html'
     permission_required = 'carros.permissao_gerente'
@@ -74,7 +78,7 @@ class CarroExcluir(PermissionRequiredMixin, DeleteView):
             messages.success(self.request, f'carro {self.object.nome} excluido com sucesso')
             return super().form_valid(form)
 
-@login_required
+@login_required(login_url=reverse_lazy('login'))
 def versoes(request, slugCarro):
     carroSelecionado = Carro.objects.get(slugCarro=slugCarro)
     versoes = Versao.objects.filter(carro__id=carroSelecionado.id)
@@ -87,11 +91,13 @@ def versoes(request, slugCarro):
     return HttpResponse('teste')
 
 
-class VersaoDetalheView(PermissionRequiredMixin, generic.DetailView):
+class VersaoDetalheView(RedirectPermissionRequiredMixin, generic.DetailView):
     model = Versao
     template_name='carros/versaoDetalhe.html'
     permission_required = 'carros.permissao_funcionario'
 
+@login_required(login_url=reverse_lazy('login'))
+@RedirectPermissionRequired
 @permission_required('carros.permissao_supervisor')
 def versaoCriar(request, slugCarro):
     carro = Carro.objects.get(slugCarro=slugCarro)
@@ -120,7 +126,7 @@ def versaoCriar(request, slugCarro):
     return redirect(reverse('carros:versoes', kwargs={'slugCarro':slugCarro}))
 
 
-class VersaoEditar(PermissionRequiredMixin, UpdateView):
+class VersaoEditar(RedirectPermissionRequiredMixin, UpdateView):
     model = Versao
     fields = ['nome','motor','combustivel','direcao','seguranca','acessorio','imagem','ano','modelo']
     template_name = 'carros/versaoEditar.html'
@@ -138,9 +144,9 @@ class VersaoEditar(PermissionRequiredMixin, UpdateView):
         messages.success(self.request, 'versao alterada com sucesso')
         return super().form_valid(form)
 
-
-class VersaoExcluir(PermissionRequiredMixin, DeleteView):
+class VersaoExcluir(RedirectPermissionRequiredMixin, DeleteView):
     model = Versao
     template_name = 'carros/versaoExcluir.html'
     success_url = reverse_lazy('carros:versoes', kwargs={'slugCarro':'teste'})
     permission_required = 'carros.permissao_supervisor'
+
