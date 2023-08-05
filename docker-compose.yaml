@@ -3,7 +3,11 @@ version: '3'
 services:
   app:
     build: .
+    container_name: cont_django_concessionaria
     volumes:
       - .:/home/python/app
     env_file:
       - .env
+    ports:
+      - "8000:8000"
+    command: ./start.sh
