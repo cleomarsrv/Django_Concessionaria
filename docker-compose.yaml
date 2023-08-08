@@ -3,7 +3,19 @@ version: '3'
 services:
   app:
     build: .
+<<<<<<< Updated upstream
+=======
+    container_name: cont_django_concessionaria
+    #tty: true
+>>>>>>> Stashed changes
     volumes:
       - .:/home/python/app
     env_file:
       - .env
+<<<<<<< Updated upstream
+=======
+    ports:
+      - "8000:8000"
+      - "7000:7000"
+    command: ./start.sh
+>>>>>>> Stashed changes

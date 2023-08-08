@@ -4,5 +4,21 @@ fixtures/
 db.sqlite3
 Pipfile
 Pipfile.lock
+<<<<<<< Updated upstream
 .env
 templates/registration
+=======
+#media/
+#fixtures/
+#db.sqlite3
+#.env
+carros/__pycache__/
+compras/__pycache__/
+pessoas/__pycache__/
+vendas/__pycache__/
+colaboradores/__pycache__/
+permissoes/__pycache__/
+vendas/__pycache__/
+django_concessionaria/__pycache__/
+*.pyc
+>>>>>>> Stashed changes

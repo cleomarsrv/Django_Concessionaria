@@ -7,6 +7,10 @@ from .forms import ColaboradorModelForm
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required, permission_required
+<<<<<<< Updated upstream
+=======
+from permissoes.redirecionar import RedirectPermissionRequiredMixin
+>>>>>>> Stashed changes
 
 
 class ColaboradoresListar(ListView,LoginRequiredMixin):
@@ -55,7 +59,12 @@ class ColaboradorEditar(UpdateView,LoginRequiredMixin):
         messages.success(self.request, f'Colaborador: {self.object.nomeCompleto } alterado com sucesso.')
         return super().form_valid(form)
 
+<<<<<<< Updated upstream
 @permission_required('colaboradores.permissao_gerente')
+=======
+@login_required(login_url=reverse_lazy('login'))
+@permission_required('colaboradores.permissao_gerente', raise_exception=True)
+>>>>>>> Stashed changes
 def ColaboradorInativar(request, id):
     if request.method == 'GET':
         colaborador = get_object_or_404(Colaborador, id=id)
@@ -74,7 +83,12 @@ def ColaboradorInativar(request, id):
         messages.info(request, f'colaborador {colaborador.nomeCompleto} foi INATIVADO.')
         return redirect(reverse('colaboradores:listar'))
 
+<<<<<<< Updated upstream
 @permission_required('colaboradores.permissao_gerente')
+=======
+@login_required(login_url=reverse_lazy('login'))
+@permission_required('colaboradores.permissao_gerente', raise_exception=True)
+>>>>>>> Stashed changes
 def ColaboradorReativar(request, id):
     if request.method == 'GET':
         colaborador = get_object_or_404(Colaborador, id=id)

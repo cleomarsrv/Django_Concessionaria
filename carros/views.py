@@ -9,6 +9,10 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required, permission_required
 from carros.forms import VersaoModelForm
+<<<<<<< Updated upstream
+=======
+from permissoes.redirecionar import RedirectPermissionRequiredMixin
+>>>>>>> Stashed changes
 
 @login_required
 def carros(request):
@@ -24,7 +28,12 @@ def carros(request):
     }
     return render(request, 'carros/carros.html', context=context)
 
+<<<<<<< Updated upstream
 @permission_required('carros.permissao_supervisor')
+=======
+@login_required(login_url=reverse_lazy('login'))
+@permission_required('carros.permissao_supervisor', raise_exception=True)
+>>>>>>> Stashed changes
 def carroCriar(request):
     if request.method == "GET":
         return render(request, 'carros/carroCriar.html')
@@ -82,7 +91,6 @@ def versoes(request, slugCarro):
         'carroSelecionado':carroSelecionado,
     }
     return render(request, 'carros/carroVersoes.html', context=context)
-    return HttpResponse('teste')
 
 
 class VersaoDetalheView(generic.DetailView,LoginRequiredMixin):
@@ -90,7 +98,12 @@ class VersaoDetalheView(generic.DetailView,LoginRequiredMixin):
     template_name='carros/versaoDetalhe.html'
     permission_required = 'carros.permissao_funcionario'
 
+<<<<<<< Updated upstream
 @permission_required('carros.permissao_supervisor')
+=======
+# @login_required(login_url=reverse_lazy('login'))
+@permission_required('carros.permissao_supervisor', raise_exception=True)
+>>>>>>> Stashed changes
 def versaoCriar(request, slugCarro):
     carro = Carro.objects.get(slugCarro=slugCarro)
     if request.method == "GET":
