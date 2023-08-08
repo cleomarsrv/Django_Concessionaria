@@ -9,14 +9,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required, permission_required
 from carros.forms import VersaoModelForm
-<<<<<<< HEAD
-from permissoes.redirecionar import RedirectPermissionRequiredMixin, RedirectPermissionRequired
-=======
-<<<<<<< Updated upstream
-=======
 from permissoes.redirecionar import RedirectPermissionRequiredMixin
->>>>>>> Stashed changes
->>>>>>> permissoes
 
 
 @login_required(login_url=reverse_lazy('login'))
@@ -33,18 +26,9 @@ def carros(request):
     }
     return render(request, 'carros/carros.html', context=context)
 
-<<<<<<< HEAD
-@login_required(login_url=reverse_lazy('login'))
-@RedirectPermissionRequired
-@permission_required('carros.permissao_supervisor', raise_exception=True)
-=======
-<<<<<<< Updated upstream
-@permission_required('carros.permissao_supervisor')
-=======
+
 @login_required(login_url=reverse_lazy('login'))
 @permission_required('carros.permissao_supervisor', raise_exception=True)
->>>>>>> Stashed changes
->>>>>>> permissoes
 def carroCriar(request):
     if request.method == "GET":
         return render(request, 'carros/carroCriar.html')
@@ -111,17 +95,8 @@ class VersaoDetalheView(RedirectPermissionRequiredMixin, generic.DetailView):
     template_name='carros/versaoDetalhe.html'
     permission_required = 'carros.permissao_funcionario'
 
-<<<<<<< HEAD
 @login_required(login_url=reverse_lazy('login'))
-@RedirectPermissionRequired
-=======
-<<<<<<< Updated upstream
->>>>>>> permissoes
-@permission_required('carros.permissao_supervisor')
-=======
-# @login_required(login_url=reverse_lazy('login'))
 @permission_required('carros.permissao_supervisor', raise_exception=True)
->>>>>>> Stashed changes
 def versaoCriar(request, slugCarro):
     carro = Carro.objects.get(slugCarro=slugCarro)
     if request.method == "GET":
@@ -172,4 +147,3 @@ class VersaoExcluir(RedirectPermissionRequiredMixin, DeleteView):
     template_name = 'carros/versaoExcluir.html'
     success_url = reverse_lazy('carros:versoes', kwargs={'slugCarro':'teste'})
     permission_required = 'carros.permissao_supervisor'
-
