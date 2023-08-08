@@ -43,12 +43,12 @@
                                 <td>{{venda.dataHora|date:"d/m/Y H:i"}}</td>
                                 <td>{{venda.detalhes}}</td>
                                 <td>{{venda.valorVenda}}</td>
-                                <td>{{venda.formaPagamento}}</td>
+                                <td>{{venda.get_formaPagamento_display}}</td>
                                 <td>{{venda.cliente}}</td>
                                 <td>{{venda.colaborador}}</td>
                                 <td>{{venda.versao.carro}}</td>
                                 <td>{{venda.versao}}</td>
-                                <td>{{venda.situacao}}</td>
+                                <td>{{venda.get_situacao_display}}</td>
                             </tr>
                         {% endfor %}
                     </tbody>
