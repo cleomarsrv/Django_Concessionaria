@@ -4,7 +4,7 @@ services:
   app:
     build: .
     container_name: cont_django_concessionaria
-    #tty: true
+    user: "1001:1001"
     volumes:
       - .:/home/python/app
     env_file:

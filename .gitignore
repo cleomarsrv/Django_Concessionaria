@@ -14,3 +14,4 @@ permissoes/__pycache__/
 vendas/__pycache__/
 django_concessionaria/__pycache__/
 *.pyc
+srvTest*

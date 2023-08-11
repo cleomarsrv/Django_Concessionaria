@@ -4,11 +4,11 @@ RUN useradd -ms /bin/bash python
 
 RUN pip install pipenv
 
-USER root
-
 RUN apt-get update && apt-get install -y nano
 
 RUN echo 'root:python' | chpasswd
+
+USER python
 
 WORKDIR /home/python/app
 
